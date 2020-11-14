@@ -381,7 +381,30 @@ div.tocify {
 </div>
 
 
-
+<div id="loading-and-tidying-the-data" class="section level3">
+<h3>Loading and tidying the data</h3>
+<p>We fetched the data from an API as shown in the code below and called it ny_cost.</p>
+<pre class="r"><code>ny_cost = 
+  GET(&quot;https://health.data.ny.gov/resource/7dtz-qxmr.csv&quot;) %&gt;% 
+  content(&quot;parsed&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   year = col_double(),
+##   pfi = col_double(),
+##   facility_name = col_character(),
+##   apr_drg_code = col_double(),
+##   apr_severity_of_illness_code = col_double(),
+##   apr_drg_description = col_character(),
+##   apr_severity_of_illness_description = col_character(),
+##   apr_medical_surgical_code = col_character(),
+##   apr_medical_surgical_description = col_character(),
+##   discharges = col_double(),
+##   mean_charge = col_double(),
+##   median_charge = col_double(),
+##   mean_cost = col_double(),
+##   median_cost = col_double()
+## )</code></pre>
+</div>
 
 
 

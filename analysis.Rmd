@@ -5,3 +5,24 @@ output:
     toc: true
     toc_float: true
 ---
+
+
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(httr)
+library(plotly)
+```
+
+### Loading and tidying the data
+
+We fetched the data from an API as shown in the code below and called it ny_cost.
+
+
+```{r}
+ny_cost = 
+  GET("https://health.data.ny.gov/resource/7dtz-qxmr.csv") %>% 
+  content("parsed")
+```
+
