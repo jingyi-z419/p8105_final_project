@@ -383,9 +383,10 @@ div.tocify {
 
 <div id="loading-and-tidying-the-data" class="section level3">
 <h3>Loading and tidying the data</h3>
-<p>We fetched the data from an API as shown in the code below and called it ny_cost.</p>
+<p>We fetched the data from an API as shown in the code below and called it ny_cost. This dataset which contains information from year 2015-2017 is a portion of the original dataset.</p>
 <pre class="r"><code>ny_cost = 
-  GET(&quot;https://health.data.ny.gov/resource/7dtz-qxmr.csv&quot;) %&gt;% 
+  GET(&quot;https://health.data.ny.gov/resource/7dtz-qxmr.csv&quot;,
+      query = list(&quot;$limit&quot; = 342913)) %&gt;% 
   content(&quot;parsed&quot;)</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
