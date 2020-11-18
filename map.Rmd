@@ -5,11 +5,44 @@ output:
     orientation: columns
     vertical_layout: fill
     source: embed
+  runtime: shiny
 ---
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
 library(tidyverse)
 library(plotly)
+library(httr)
+library(flexdashboard)
+```
+
+
+```{r, include=FALSE}
+# import the NYS inpatient data 
+ny_cost = 
+  GET("https://health.data.ny.gov/resource/7dtz-qxmr.csv",
+      query = list("$limit" = 342913)) %>% 
+  content("parsed") %>% 
+  select(year, pfi, facility_name, apr_severity_of_illness_description, mean_cost) %>% 
+  select(pfi, everything())
+```
+
+
+
+```{r, include=FALSE}
+# import the second data containing latitude and longtitude of the hospitals 
+coordinates_df = 
+   GET("https://health.data.ny.gov/resource/vn5v-hh5r.csv") %>% 
+   content("parsed") %>% 
+   select(fac_id, facility_name, latitude, longitude) %>% 
+   rename(pfi = fac_id) %>% 
+   select(pfi, everything())
+```
+
+
+```{r, include=FALSE}
+# merge the two dataframes together 
+overall_df =
+  left_join(ny_cost, coordinates_df, by = "pfi")
 ```
 
