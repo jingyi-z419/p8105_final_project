@@ -46,3 +46,19 @@ overall_df =
   left_join(ny_cost, coordinates_df, by = "pfi")
 ```
 
+Column {.sidebar}
+-----------------------------------------------------------------------
+```{r}
+severity_levels = overall_df %>% pull(apr_severity_of_illness_description) %>% unique()
+
+selectInput(
+  "severity_levels",
+  h3("Severity of Illness"),
+  choices = severity_levels,
+  selected = "Minor"
+)
+
+```
+
+
+
