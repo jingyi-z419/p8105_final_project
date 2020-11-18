@@ -50,6 +50,8 @@ Column {.sidebar}
 -----------------------------------------------------------------------
 ```{r}
 severity_levels = overall_df %>% pull(apr_severity_of_illness_description) %>% unique()
+year_choice = overall_df %>% pull(year) %>% unique()
+
 
 selectInput(
   "severity_levels",
@@ -57,6 +59,23 @@ selectInput(
   choices = severity_levels,
   selected = "Minor"
 )
+
+
+sliderInput(
+  "mean_cost_less1m",
+  h3("Mean Cost Range"),
+  0, 1000000,
+  value = c(100, 5000)
+)
+
+
+selectInput(
+  "year_choice",
+  h3("Year"),
+  choices = year_choice,
+  selected = 2017
+)
+
 
 ```
 
