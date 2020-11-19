@@ -18,7 +18,7 @@ library(plotly)
 ### Loading and tidying the data
 
 We fetched the data from an API as shown in the code below and called it ny_cost.
-This dataset which contains information from year 2015-2017 is a portion of the original dataset. 
+This dataset only contains information from year 2015-2017 is a portion of the original dataset. 
 
 ```{r}
 ny_cost = 
