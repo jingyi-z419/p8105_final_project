@@ -13,4 +13,4 @@ navbar:
       href: https://github.com/jingyi-z419/p8105_final_project
 output:
   html_document:
-    theme: flatly
+    theme: cosmo

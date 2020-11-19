@@ -13,11 +13,14 @@ library(flexdashboard)
 library(tidyverse)
 library(plotly)
 library(httr)
-library(flexdashboard)
+library(shiny)
+library(leaflet)
+
+library(rsconnect)
 ```
 
 
-```{r, include=FALSE}
+```{r, include = FALSE}
 # import the NYS inpatient data 
 ny_cost = 
   GET("https://health.data.ny.gov/resource/7dtz-qxmr.csv",
@@ -29,7 +32,7 @@ ny_cost =
 
 
 
-```{r, include=FALSE}
+```{r, include = FALSE}
 # import the second data containing latitude and longtitude of the hospitals 
 coordinates_df = 
    GET("https://health.data.ny.gov/resource/vn5v-hh5r.csv") %>% 
@@ -40,10 +43,12 @@ coordinates_df =
 ```
 
 
-```{r, include=FALSE}
+```{r, include = FALSE}
 # merge the two dataframes together 
 overall_df =
-  left_join(ny_cost, coordinates_df, by = "pfi")
+  left_join(ny_cost, coordinates_df, by = "pfi") %>% 
+  mutate(facility_name = facility_name.x) %>%
+  select(-facility_name.x, -facility_name.y)
 ```
 
 Column {.sidebar}
@@ -69,15 +74,32 @@ sliderInput(
 )
 
 
-selectInput(
+radioButtons(
   "year_choice",
   h3("Year"),
-  choices = year_choice,
-  selected = 2017
+  choices = year_choice
 )
 
 
 ```
 
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+renderLeaflet({
+  overall_df %>% 
+    filter(
+      apr_severity_of_illness_description == input[["severity_levels"]],
+      mean_cost %in% input[["mean_cost_less1m"]][1]:input[["mean_cost_less1m"]][2],
+      year == input[["year_choice"]]
+    ) %>% 
+    leaflet() %>% 
+    addProviderTiles(providers$CartoDB.Positron) %>% 
+    addCircleMarkers(lat = ~latitude, lng = ~longitude, radius = .1)
+})
+```
 
 
