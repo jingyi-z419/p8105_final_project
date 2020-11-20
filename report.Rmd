@@ -1,5 +1,6 @@
 ---
 title: "Inpatient Cost in NY Report"
+author: Danyang Gui, Jingyi Zhang, Zihan Yu, Kexin Sun, Yining Xiang
 output: 
   html_document:
     toc: true
@@ -11,4 +12,32 @@ library(flexdashboard)
 library(tidyverse)
 library(plotly)
 ```
+
+## Motivation
+
+Facts
+
+Goals of our project
+
+
+## Related Work
+
+## Initial questions
+
+## Data
+
+## Exploratoy Analysis
+
+## Findings
+
+## Additional analysis
+
+## Discussion
+
+
+
+
+
+
+
 
