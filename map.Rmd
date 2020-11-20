@@ -15,8 +15,6 @@ library(plotly)
 library(httr)
 library(shiny)
 library(leaflet)
-
-library(rsconnect)
 ```
 
 
@@ -55,8 +53,6 @@ Column {.sidebar}
 -----------------------------------------------------------------------
 ```{r}
 severity_levels = overall_df %>% pull(apr_severity_of_illness_description) %>% unique()
-year_choice = overall_df %>% pull(year) %>% unique()
-
 
 selectInput(
   "severity_levels",
@@ -65,22 +61,12 @@ selectInput(
   selected = "Minor"
 )
 
-
 sliderInput(
   "mean_cost_less1m",
   h3("Mean Cost Range"),
   0, 1000000,
   value = c(100, 5000)
 )
-
-
-radioButtons(
-  "year_choice",
-  h3("Year"),
-  choices = year_choice
-)
-
-
 ```
 
 Column {data-width=650}
@@ -89,16 +75,22 @@ Column {data-width=650}
 ### Chart A
 
 ```{r}
+pal = colorNumeric(
+  palette = "viridis",
+  domain = overall_df$mean_cost
+)
+
 renderLeaflet({
   overall_df %>% 
     filter(
       apr_severity_of_illness_description == input[["severity_levels"]],
       mean_cost %in% input[["mean_cost_less1m"]][1]:input[["mean_cost_less1m"]][2],
-      year == input[["year_choice"]]
-    ) %>% 
+      year == "2017"
+    ) %>%
+    group_by(facility_name) %>%
     leaflet() %>% 
     addProviderTiles(providers$CartoDB.Positron) %>% 
-    addCircleMarkers(lat = ~latitude, lng = ~longitude, radius = .1)
+    addCircleMarkers(data = overall_df, lat = ~latitude, lng = ~longitude, radius = .1, color = ~pal(mean_cost))
 })
 ```
 
