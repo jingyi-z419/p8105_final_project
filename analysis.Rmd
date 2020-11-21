@@ -41,6 +41,10 @@ mental_care_df =
   )
 ```
 
+```{r}
+write_csv(ny_local, "./data/ny_local.csv")
+```
+
 
 Page 1
 =====================================  
