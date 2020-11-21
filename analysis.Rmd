@@ -215,6 +215,7 @@ prevention =
        y = 'Prevalence (%)') +
   theme(axis.text.x = element_text(angle = 60, hjust = 1)) 
 
+prevention
 ```
 
 
@@ -243,10 +244,11 @@ mental_checkup =
 mental_checkup_plot = 
   mental_checkup %>% 
   ggplot(aes(x = value_mental, y = value_checkup)) +
-  geom_point() +
+  geom_point(color = "red") +
   labs(title = "Current Annual Checkup",
        x = 'Mental Health Prevalence (%)', 
-       y = 'Unhealty Behavior')
+       y = 'Unhealty Behavior') +
+  scale_y_continuous(limits = c(0, 100))
 
 mental_checkup_plot
 
@@ -267,10 +269,11 @@ mental_insurance =
 mental_insurance_plot = 
   mental_insurance %>% 
   ggplot(aes(x = value_mental, y = value_insurance)) +
-  geom_point() +
+  geom_point(color = "yellow") +
   labs(title = "Current Lack of Insurance",
        x = 'Mental Health Prevalence (%)', 
-       y = 'Unhealty Behavior')
+       y = 'Unhealty Behavior') +
+  scale_y_continuous(limits = c(0, 100))
 
 mental_insurance_plot
 
