@@ -282,7 +282,10 @@ Page 3 {data-orientation=rows}
 
 
 ```{r}
-
+covid_symptom_df =
+  read_csv("./data/Anxiety_Depression.csv") %>% 
+  janitor::clean_names()
+  
 ```
 
 Row
