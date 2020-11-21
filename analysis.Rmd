@@ -15,13 +15,37 @@ ny_local =
   read_csv("./data/500_Cities.csv") %>% 
   janitor::clean_names() %>% 
   filter(state_abbr == "NY")
+
+covid_symptom_df =
+  read_csv("./data/Anxiety_Depression.csv") %>% 
+  janitor::clean_names() %>% 
+  filter(state == "New York") %>% 
+  mutate(
+    indicator_id = case_when(
+      indicator == "Symptoms of Anxiety Disorder" ~ "Anxiety",
+      indicator == "Symptoms of Anxiety Disorder or Depressive Disorder" ~ "Anxiety/Depressive",
+      indicator == "Symptoms of Depressive Disorder" ~ "Depressive"
+  ))
+
+mental_care_df =
+  read_csv("./data/Mental_Health_Care.csv") %>% 
+  janitor::clean_names() %>% 
+  filter(state == "New York") %>% 
+  mutate(
+    indicator_id = case_when(
+      indicator == "Needed Counseling or Therapy But Did Not Get It, Last 4 Weeks" ~ "No Therapy",
+      indicator == "Received Counseling or Therapy, Last 4 Weeks" ~ "Therapy",
+      indicator == "Took Prescription Medication for Mental Health And/Or Received Counseling or Therapy, Last 4 Weeks" ~ "Med/Therapy",
+      indicator == "Took Prescription Medication for Mental Health, Last 4 Weeks" ~ "Med"
+    )
+  )
 ```
 
 
 Page 1
 =====================================  
 
-Row
+Column
 -------------------------------------
     
 ### Chart 1
@@ -42,7 +66,7 @@ ub_overall_plot =
 ggplotly(ub_overall_plot)
 ```
    
-Row {.tabset .tabset-fade}
+Column {.tabset}
 -------------------------------------
    
 ### Chart 2
@@ -189,10 +213,10 @@ ggplotly(sleep_plot)
 ```
 
 
-Page 2 {data-orientation=rows}
+Page 2 {data-orientation=columns}
 =====================================     
    
-Row
+Column
 -------------------------------------
 
 ### Chart 1
@@ -213,7 +237,7 @@ prevention_plot =
 ggplotly(prevention_plot)
 ```
 
-Row {.tabset .tabset-fade}
+Column {.tabset}
 -------------------------------------
    
 ### Chart 2
@@ -276,35 +300,50 @@ ggplotly(mental_insurance_plot)
 ```
 
 
-
+ 
 Page 3 {data-orientation=rows}
 =====================================  
 
-
-```{r}
-covid_symptom_df =
-  read_csv("./data/Anxiety_Depression.csv") %>% 
-  janitor::clean_names()
-  
-```
-
-Row
+Row {data-height=500}
 -------------------------------------
 
 ### Chart 1
 
 ```{r}
+anxiety_depression_plot =  
+  covid_symptom_df %>%
+  ggplot(aes(x = time_period, y = value, color = indicator_id)) +
+  geom_point() +
+  geom_line() +
+  scale_x_continuous(
+    limits = c(1, 18),
+    breaks = seq(1, 18, 1)
+  ) +
+  labs(
+    x = "Time (week)",
+    y = "Percentage"
+  )
 
+ggplotly(anxiety_depression_plot)
 ```
 
-Row
+Row {data-height=500}
 -------------------------------------
-   
+
 ### Chart 2
-
+  
 ```{r}
+mental_care_plot =
+  mental_care_df %>% 
+  ggplot(aes(x = time_period, y = value, color = indicator_id)) +
+  geom_point() +
+  geom_line() +
+  labs(
+    x = "Time (week)",
+    y = "Percentage"
+  )
 
-```   
-    
+ggplotly(mental_care_plot)
+```
 
 
