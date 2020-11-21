@@ -198,7 +198,19 @@ Row
 ### Chart 1
 
 ```{r}
+prevention_plot = 
+  ny_local %>% 
+  filter(category == "Prevention") %>% 
+  group_by(measure_id) %>% 
+  ggplot(aes(x = measure_id, y = data_value, color = measure_id)) +
+  geom_boxplot() +
+  labs(
+       x = "Prevention", 
+       y = "Prevalence (%)") +
+  theme(axis.text.x = element_text(angle = 60, hjust = 1))  +
+  scale_y_continuous(limits = c(0, 100))
 
+prevention_plot
 ```
 
 Row {.tabset .tabset-fade}
@@ -207,13 +219,60 @@ Row {.tabset .tabset-fade}
 ### Chart 2
 
 ```{r}
+mental_health_df = 
+  ny_local %>% 
+  select(unique_id, data_value, measure_id, population_count) %>% 
+  filter(measure_id == "MHLTH") %>% 
+  mutate(value_mental = data_value) %>% 
+  select(unique_id, value_mental, population_count)
 
+
+checkup_df =
+  ny_local %>% 
+  select(unique_id, data_value, measure_id) %>% 
+  filter(measure_id == "CHECKUP") %>% 
+  mutate(value_checkup = data_value) %>% 
+  select(unique_id, value_checkup)
+
+
+mental_checkup = 
+  left_join(mental_health_df, checkup_df)
+
+mental_checkup_plot = 
+  mental_checkup %>% 
+  ggplot(aes(x = value_mental, y = value_checkup, size = population_count)) +
+  geom_point(color = "steel blue") +
+  labs(title = "Current Annual Checkup",
+       x = 'Mental Health Prevalence (%)', 
+       y = 'Prevention Prevalence (%)') +
+  scale_y_continuous(limits = c(0, 100))
+
+mental_checkup_plot
 ```   
     
 ### Chart 3
 
 ```{r}
+insurance_df =
+  ny_local %>% 
+  select(unique_id, data_value, measure_id, population_count) %>% 
+  filter(measure_id == "ACCESS2") %>% 
+  mutate(value_insurance = data_value) %>% 
+  select(unique_id, value_insurance, population_count)
 
+mental_insurance = 
+  left_join(mental_health_df, insurance_df)
+
+mental_insurance_plot = 
+  mental_insurance %>%
+  ggplot(aes(x = value_mental, y = value_insurance, size = population_count)) +
+  geom_point(color = "chartreuse4") +
+  labs(title = "Current Lack of Insurance",
+       x = "Mental Health Prevalence (%)", 
+       y = "Prevention Prevalence (%)") +
+  scale_y_continuous(limits = c(0, 100))
+
+mental_insurance_plot
 ```
 
 

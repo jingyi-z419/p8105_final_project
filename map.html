@@ -2621,24 +2621,7 @@ window.FlexDashboardComponents.push({
 
 <div id="dashboard-container">
 
-<div id="import-the-nys-inpatient-data" class="section level1">
-<h1>import the NYS inpatient data</h1>
-<div class="knitr-options" data-fig-width="576" data-fig-height="460">
 
-</div>
-</div>
-<div id="import-the-second-data-containing-latitude-and-longtitude-of-the-hospitals" class="section level1">
-<h1>import the second data containing latitude and longtitude of the hospitals</h1>
-<div class="knitr-options" data-fig-width="576" data-fig-height="460">
-
-</div>
-</div>
-<div id="merge-the-two-dataframes-together" class="section level1">
-<h1>merge the two dataframes together</h1>
-<div class="knitr-options" data-fig-width="576" data-fig-height="460">
-
-</div>
-</div>
 
 </div>
 
@@ -2668,44 +2651,6 @@ output:
     source: embed
   runtime: shiny
 ---
-
-```{r setup, include=FALSE}
-library(flexdashboard)
-library(tidyverse)
-library(plotly)
-library(httr)
-library(flexdashboard)
-```
-
-# import the NYS inpatient data 
-```{r}
-ny_cost = 
-  GET("https://health.data.ny.gov/resource/7dtz-qxmr.csv",
-      query = list("$limit" = 342913)) %>% 
-  content("parsed") %>% 
-  select(year, facility_name, apr_severity_of_illness_description, mean_cost) %>% 
-  select(facility_name, everything())
-```
-
-
-# import the second data containing latitude and longtitude of the hospitals 
-```{r}
-coordinates_df = 
-   GET("https://health.data.ny.gov/resource/vn5v-hh5r.csv") %>% 
-   content("parsed") %>% 
-   select(facility_name, latitude, longitude) %>% 
-   select(facility_name, everything())
-```
-
-# merge the two dataframes together 
-```{r}
-overall_df =
-  left_join(ny_cost, coordinates_df, by = "facility_name")
-```
-
-
-
-
 </code></pre>
 </div>
 <script type="text/javascript">
