@@ -201,3 +201,78 @@ ggplotly(sleep_plot)
 ```
 
 
+
+```{r}
+prevention = 
+  ny_local %>% 
+  filter(category == "Prevention") %>% 
+  group_by(measure_id) %>% 
+  ggplot(aes(x = measure_id, y = data_value)) +
+  geom_boxplot(aes(size = population_count, colour = as.factor(year) ),
+             alpha = 0.5) +
+  labs(title = "The Prevalence of Prevention Measure",
+       x = 'Prevention Measure', 
+       y = 'Prevalence (%)') +
+  theme(axis.text.x = element_text(angle = 60, hjust = 1)) 
+
+```
+
+
+
+
+```{r}
+mental_health_df = 
+  ny_local %>% 
+  select(unique_id, data_value, measure_id) %>% 
+  filter(measure_id == "MHLTH") %>% 
+  mutate(value_mental = data_value) %>% 
+  select(unique_id, value_mental)
+
+
+checkup_df =
+  ny_local %>% 
+  select(unique_id, data_value, measure_id) %>% 
+  filter(measure_id == "CHECKUP") %>% 
+  mutate(value_checkup = data_value) %>% 
+  select(unique_id, value_checkup)
+
+
+mental_checkup = 
+  left_join(mental_health_df, checkup_df)
+
+mental_checkup_plot = 
+  mental_checkup %>% 
+  ggplot(aes(x = value_mental, y = value_checkup)) +
+  geom_point() +
+  labs(title = "Current Annual Checkup",
+       x = 'Mental Health Prevalence (%)', 
+       y = 'Unhealty Behavior')
+
+mental_checkup_plot
+
+```
+
+```{r}
+insurance_df =
+  ny_local %>% 
+  select(unique_id, data_value, measure_id) %>% 
+  filter(measure_id == "ACCESS2") %>% 
+  mutate(value_insurance = data_value) %>% 
+  select(unique_id, value_insurance)
+
+
+mental_insurance = 
+  left_join(mental_health_df, insurance_df)
+
+mental_insurance_plot = 
+  mental_insurance %>% 
+  ggplot(aes(x = value_mental, y = value_insurance)) +
+  geom_point() +
+  labs(title = "Current Lack of Insurance",
+       x = 'Mental Health Prevalence (%)', 
+       y = 'Unhealty Behavior')
+
+mental_insurance_plot
+
+```
+
