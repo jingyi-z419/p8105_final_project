@@ -1,9 +1,9 @@
-name: "Yay internet!"
+name: "The Mental Health Project"
 output_dir: "."
 navbar:
   title: "Home"
   right:
-    - text: "Analysis"
+    - text: "Dashboard"
       href: dashboard.html
     - text: "Map"
       href: map.html
