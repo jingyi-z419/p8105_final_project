@@ -24,7 +24,7 @@ library(rsconnect)
 
 
 ```{r, include = FALSE}
-# import the 500 cities local healt data
+# import the 500 cities local health data
 ny_local = 
   read_csv("./data/500_Cities.csv") %>% 
   janitor::clean_names() %>% 

@@ -351,3 +351,17 @@ ggplotly(mental_care_plot)
 ```
 
 
+
+```{r}
+treatment_plot =
+  mental_care_df %>% 
+  ggplot(aes(x = indicator_id, y = value, color = indicator_id)) +
+  geom_boxplot() +
+  labs(
+    x = "Treatment",
+    y = "Percentage"
+  )
+
+ggplotly(treatment_plot)
+```
+
