@@ -5,7 +5,7 @@ output:
     toc: true
     toc_float: true
 ---
-<<<<<<< HEAD
+
 <br />
 
 <img src="image/support.jpg" style="width:65%" position="middle">
@@ -41,8 +41,5 @@ We also have a short screencast to walk you through the website. Please click he
 
 <br />
 
-### Contributors: Jingyi Zhang, Danyang Gui
-=======
+### Contributors: Danyang Gui, Jingyi Zhang, Zihan Yu, Kexin Sun, Yining Xiang
 
-
->>>>>>> aacae5d56a7b191d8d63ef7ca4dfe3c9b7eac466
