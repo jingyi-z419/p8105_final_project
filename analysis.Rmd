@@ -2,7 +2,7 @@
 title: "Analysis Plots"
 output: 
   flexdashboard::flex_dashboard:
-    theme: cosmo
+    theme: simplex
 
 ---
 

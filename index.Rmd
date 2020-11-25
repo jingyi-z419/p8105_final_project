@@ -1,8 +1,43 @@
 ---
-title: "Final Project"
+title: "The Mental Health Project"
 output: 
   html_document:
-    code_folding: hide
     toc: true
     toc_float: true
 ---
+<br />
+
+<img src="image/support.jpg" style="width:65%" position="middle">
+
+<br />
+
+According to CDC website, in 2015, there were an estimated 43.4 million adults -- about 1 in 5 Americans aged 18 or older -- with a mental illness within the previous year. Among children and tees, about 20% -- 1 in 5 children -- have diagnosed with serious debilitating mental disorder. One serious consequence associated with mental illness is suicide. It is the 10th leading cause of death in the U.S. and the 2nd leading cause of death among people aged 15-34. 
+
+This year is especially challenging for mental health because of the COVID-19 pandemic. As the number of cases of COVID-19 increases, so does the associated anxiety and depression. Thus, we would like to assess the risk factors related to mental health from pre-pandemic period as well as newly released datasets which illustrate the effects of COVID-19 on mental health.  
+
+<br />
+
+## Data Description
+
+The main dataset used in this project is [500 Cities: Local Data for Better Health, 2019 release](https://chronicdata.cdc.gov/500-Cities/500-Cities-Local-Data-for-Better-Health-2019-relea/6vp6-wxuq). The 500 Cities project is a collaboration between CDC, the Robert Wood Johnson Foundation, and the CDC foundation. It aims to provide city and census tract-level small area estimates for chronic disease risk factors, health outcomes, and clinical preventive service use for the largest 500 cities in the United States. For this project, we used the complete dataset for the 500 Cities project 2019 release. It contains information recorded from 2016-2017. We filtered the original dataset so that it includes data for New York state. 
+
+<br />
+
+## Main Findings
+
+<br />
+
+## Website Overview
+
+**Analysis:** 
+
+**Map:** an interactive map which you can explore different risk factors for mental health and its distributions in NY state.
+
+**Report:** a detailed analysis of the dataset, findings, and conclusions.
+
+We also have a short screencast to walk you through the website. Please click here: 
+
+
+<br />
+
+### Contributors: Jingyi Zhang, Danyang Gui

@@ -11,11 +11,11 @@
 
 
 
-<title>Final Project</title>
+<title>The Mental Health Project</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -23,7 +23,6 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
@@ -108,33 +107,33 @@ summary {
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
-  padding-top: 51px;
+  padding-top: 41px;
   padding-bottom: 40px;
 }
 /* offset scroll position for anchor links (for fixed navbar)  */
 .section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 46px;
+  margin-top: -46px;
 }
 .section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 46px;
+  margin-top: -46px;
 }
 .section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 46px;
+  margin-top: -46px;
 }
 .section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 46px;
+  margin-top: -46px;
 }
 .section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 46px;
+  margin-top: -46px;
 }
 .section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 46px;
+  margin-top: -46px;
 }
 .dropdown-submenu {
   position: relative;
@@ -251,9 +250,6 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
 
 
 
@@ -366,6 +362,12 @@ div.tocify {
   <a href="report.html">Report</a>
 </li>
 <li>
+  <a href="https://www.cdc.gov/coronavirus/2019-ncov/daily-life-coping/managing-stress-anxiety.html">
+    <span class="&lt;i class=&quot;fas fa &lt;i class=&quot;fas fa-brain&quot;&gt;&lt;/i&gt;"></span>
+     
+  </a>
+</li>
+<li>
   <a href="https://github.com/jingyi-z419/p8105_final_project">
     <span class="fa fa-github fa-lg"></span>
      
@@ -378,22 +380,39 @@ div.tocify {
 
 <div class="fluid-row" id="header">
 
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
-</ul>
-</div>
 
 
-
-<h1 class="title toc-ignore">Final Project</h1>
+<h1 class="title toc-ignore">The Mental Health Project</h1>
 
 </div>
 
 
-
+<p><br /></p>
+<p><img src="image/support.jpg" style="width:65%" position="middle"></p>
+<p><br /></p>
+<p>According to CDC website, in 2015, there were an estimated 43.4 million adults – about 1 in 5 Americans aged 18 or older – with a mental illness within the previous year. Among children and tees, about 20% – 1 in 5 children – have diagnosed with serious debilitating mental disorder. One serious consequence associated with mental illness is suicide. It is the 10th leading cause of death in the U.S. and the 2nd leading cause of death among people aged 15-34.</p>
+<p>This year is especially challenging for mental health because of the COVID-19 pandemic. As the number of cases of COVID-19 increases, so does the associated anxiety and depression. Thus, we would like to assess the risk factors related to mental health from pre-pandemic period as well as newly released datasets which illustrate the effects of COVID-19 on mental health.</p>
+<p><br /></p>
+<div id="data-description" class="section level2">
+<h2>Data Description</h2>
+<p>The main dataset used in this project is <a href="https://chronicdata.cdc.gov/500-Cities/500-Cities-Local-Data-for-Better-Health-2019-relea/6vp6-wxuq">500 Cities: Local Data for Better Health, 2019 release</a>. The 500 Cities project is a collaboration between CDC, the Robert Wood Johnson Foundation, and the CDC foundation. It aims to provide city and census tract-level small area estimates for chronic disease risk factors, health outcomes, and clinical preventive service use for the largest 500 cities in the United States. For this project, we used the complete dataset for the 500 Cities project 2019 release. It contains information recorded from 2016-2017. We filtered the original dataset so that it includes data for New York state.</p>
+<p><br /></p>
+</div>
+<div id="main-findings" class="section level2">
+<h2>Main Findings</h2>
+<p><br /></p>
+</div>
+<div id="website-overview" class="section level2">
+<h2>Website Overview</h2>
+<p><strong>Analysis:</strong></p>
+<p><strong>Map:</strong> an interactive map which you can explore different risk factors for mental health and its distributions in NY state.</p>
+<p><strong>Report:</strong> a detailed analysis of the dataset, findings, and conclusions.</p>
+<p>We also have a short screencast to walk you through the website. Please click here:</p>
+<p><br /></p>
+<div id="contributors-jingyi-zhang-danyang-gui" class="section level3">
+<h3>Contributors: Jingyi Zhang, Danyang Gui</h3>
+</div>
+</div>
 
 
 
@@ -430,11 +449,6 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
-<script>
-$(document).ready(function () {
-  window.initializeCodeFolding("hide" === "show");
-});
-</script>
 
 <script>
 $(document).ready(function ()  {

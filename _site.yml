@@ -9,8 +9,11 @@ navbar:
       href: map.html
     - text: "Report"
       href: report.html
+    - icon: <i class="fas fa-brain"></i>
+      href: https://www.cdc.gov/coronavirus/2019-ncov/daily-life-coping/managing-stress-anxiety.html
     - icon: fa-github fa-lg
       href: https://github.com/jingyi-z419/p8105_final_project
+    
 output:
   html_document:
-    theme: cosmo
+    theme: simplex
