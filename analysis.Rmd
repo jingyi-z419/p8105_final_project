@@ -39,6 +39,10 @@ mental_care_df =
       indicator == "Took Prescription Medication for Mental Health, Last 4 Weeks" ~ "Med"
     )
   )
+
+chronic_df = 
+  read_csv("./data/Chronic_Disease_Indicators.csv") %>% 
+  janitor::clean_names()
 ```
 
 ```{r}
@@ -363,5 +367,30 @@ treatment_plot =
   )
 
 ggplotly(treatment_plot)
+```
+
+```{r}
+unhealthy_days_mean_plot = 
+  chronic_df %>% 
+  drop_na(data_value) %>% 
+  mutate(year = year_start) %>% 
+  filter(question == "Recent mentally unhealthy days among adults aged >= 18 years") %>% 
+  group_by(year) %>% 
+  summarise(
+    mean_of_mentally_unhealthy_days = mean(data_value)
+  ) %>% 
+  ggplot(aes(x = year, y = mean_of_mentally_unhealthy_days, color = year)) +
+  geom_point() +
+  geom_line() +
+  scale_x_continuous(
+    breaks = c(2011,2012,2013,2014,2015,2016,2017,2018)) +
+  labs(
+    title = "The average mentally unhealthy days for American adults from 2011 to 2018",
+    x = "Year",
+    y = "The average mentally unhealthy days") 
+
+
+
+unhealthy_days_mean_plot
 ```
 
