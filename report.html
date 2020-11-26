@@ -11,8 +11,9 @@
 
 <meta name="author" content="Danyang Gui, Jingyi Zhang, Zihan Yu, Kexin Sun, Yining Xiang" />
 
+<meta name="date" content="2020-12-05" />
 
-<title>Inpatient Cost in NY Report</title>
+<title>The Mental Health Project Report</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -24,6 +25,7 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
@@ -251,6 +253,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -367,7 +372,7 @@ div.tocify {
 </li>
 <li>
   <a href="https://www.cdc.gov/coronavirus/2019-ncov/daily-life-coping/managing-stress-anxiety.html">
-    <span class="&lt;i class=&quot;fas fa &lt;i class=&quot;fas fa-brain&quot;&gt;&lt;/i&gt;"></span>
+    <span class="fa fa-smile fa-lg"></span>
      
   </a>
 </li>
@@ -377,6 +382,15 @@ div.tocify {
      
   </a>
 </li>
+<li>
+  <a>
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="mailto:&lt;jz3297@cumc.columbia.edu&gt;"></a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -384,10 +398,19 @@ div.tocify {
 
 <div class="fluid-row" id="header">
 
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
 
 
-<h1 class="title toc-ignore">Inpatient Cost in NY Report</h1>
+
+<h1 class="title toc-ignore">The Mental Health Project Report</h1>
 <h4 class="author">Danyang Gui, Jingyi Zhang, Zihan Yu, Kexin Sun, Yining Xiang</h4>
+<h4 class="date">December 5, 2020</h4>
 
 </div>
 
@@ -396,6 +419,7 @@ div.tocify {
 <div id="motivation" class="section level2">
 <h2>Motivation</h2>
 <p>Mental health disorders, including clinical depression, manic depression, schizophrenia, and obsessive-compulsive disorder, account for several of the top causes of disability in the United States and worldwide. An estimated 26% of Americans ages 18 and older – about 1 in 4 adults – suffers from a diagnosable mental disorder in a given year. As residents-to-be, we are collectively interested in investigating the risk factors that contribute to mental health disorders in New York State and hopefully providing some insightful analysis on mental health related concerns in this COVID-19 era. *<a href="https://www.hopkinsmedicine.org/health/wellness-and-prevention/mental-health-disorder-statistics#:~:text=An%20estimated%2026%25%20of%20Americans,substance%20abuse%20and%20anxiety%20disorders.">Cited from JHU Medicine</a></p>
+<p><img src="image/depress_rain.gif" style="width:60%"></p>
 <p>Facts</p>
 <p>Goals of our project</p>
 <p><br /></p>
@@ -415,6 +439,64 @@ div.tocify {
 <div id="exploratoy-analysis" class="section level2">
 <h2>Exploratoy Analysis</h2>
 <p><br /></p>
+<div id="load-and-tidying-the-dataset" class="section level3">
+<h3>Load and tidying the dataset</h3>
+<pre class="r"><code>ny_local = 
+  read_csv(&quot;./data/ny_local.csv&quot;)
+
+covid_symptom_df =
+  read_csv(&quot;./data/Anxiety_Depression.csv&quot;) %&gt;% 
+  janitor::clean_names() %&gt;% 
+  filter(state == &quot;New York&quot;) %&gt;% 
+  mutate(
+    indicator_id = case_when(
+      indicator == &quot;Symptoms of Anxiety Disorder&quot; ~ &quot;Anxiety&quot;,
+      indicator == &quot;Symptoms of Anxiety Disorder or Depressive Disorder&quot; ~ &quot;Anxiety/Depressive&quot;,
+      indicator == &quot;Symptoms of Depressive Disorder&quot; ~ &quot;Depressive&quot;
+  ))
+
+mental_care_df =
+  read_csv(&quot;./data/Mental_Health_Care.csv&quot;) %&gt;% 
+  janitor::clean_names() %&gt;% 
+  filter(state == &quot;New York&quot;) %&gt;% 
+  mutate(
+    indicator_id = case_when(
+      indicator == &quot;Needed Counseling or Therapy But Did Not Get It, Last 4 Weeks&quot; ~ &quot;No Therapy&quot;,
+      indicator == &quot;Received Counseling or Therapy, Last 4 Weeks&quot; ~ &quot;Therapy&quot;,
+      indicator == &quot;Took Prescription Medication for Mental Health And/Or Received Counseling or Therapy, Last 4 Weeks&quot; ~ &quot;Med/Therapy&quot;,
+      indicator == &quot;Took Prescription Medication for Mental Health, Last 4 Weeks&quot; ~ &quot;Med&quot;
+    )
+  )</code></pre>
+<p>The main dataset used for this project was <a href="https://chronicdata.cdc.gov/500-Cities/500-Cities-Local-Data-for-Better-Health-2019-relea/6vp6-wxuq">500 Cities: Local Data for Better Health, 2019 release</a>. The 500 Cities project is a collaboration between CDC, the Robert Wood Johnson Foundation, and the CDC foundation. It aims to provide city and census tract-level small area estimates for chronic disease risk factors, health outcomes, and clinical preventive service use for the largest 500 cities in the United States.</p>
+<p>For this project, we used the complete dataset of the 500 Cities project 2019 release. It contains information recorded from 2016-2017. We filtered the original dataset so that it includes data for New York state only. The filtered dataset was named as ny_local, it was saved as a csv file and uploaded to the project repository on Github.</p>
+<p>The ny_local dataset contains 24 columns and 70133 rows. There were 141486 missing values in the dataset. Majority of these NAs were not in the main variables of interest. Thus, we decided to keep those values for plots and remove them for statistical analysis.</p>
+<p>Besides the main dataset, we included two more datasets related to the impacts of COVID-19 on mental health. Those two datasets can be accessed through <a href="https://data.cdc.gov/NCHS/Indicators-of-Anxiety-or-Depression-Based-on-Repor/8pt5-q6wp">Indicators of Anxiety or Depression COVID-19</a> and <a href="https://data.cdc.gov/NCHS/Mental-Health-Care-in-the-Last-4-Weeks/yni7-er2q">Mental Health Care COVID-19</a>. The indicators of Anxiety or Depression dataset was named as covid_symptom_df and the Mental Health Care dataset was named as mental_care_df.</p>
+<p>The covid_symptom_df contains 13 columns and 54 rows. The mental_care_df contains 14 columns and 24 rows. There were 24 missing values in the dataset. Since the missing values were not in the variables of interest, we decided to keep them.</p>
+<p><em>All datasets used for this project can be downloaded at <a href="https://github.com/jingyi-z419/p8105_final_project">Github project repo</a>, in the data folder.</em></p>
+<pre class="r"><code>ny_local %&gt;% 
+  filter</code></pre>
+<pre><code>## # A tibble: 70,133 x 24
+##     year state_abbr state_desc city_name geographic_level data_source category
+##    &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;            &lt;chr&gt;       &lt;chr&gt;   
+##  1  2016 NY         New York   Buffalo   Census Tract     BRFSS       Unhealt…
+##  2  2017 NY         New York   New York  Census Tract     BRFSS       Health …
+##  3  2017 NY         New York   New Roch… Census Tract     BRFSS       Health …
+##  4  2017 NY         New York   New York  Census Tract     BRFSS       Prevent…
+##  5  2017 NY         New York   New York  Census Tract     BRFSS       Prevent…
+##  6  2017 NY         New York   New York  Census Tract     BRFSS       Unhealt…
+##  7  2017 NY         New York   Buffalo   Census Tract     BRFSS       Prevent…
+##  8  2017 NY         New York   Buffalo   Census Tract     BRFSS       Unhealt…
+##  9  2017 NY         New York   New York  Census Tract     BRFSS       Unhealt…
+## 10  2016 NY         New York   Mount Ve… Census Tract     BRFSS       Prevent…
+## # … with 70,123 more rows, and 17 more variables: unique_id &lt;chr&gt;,
+## #   measure &lt;chr&gt;, data_value_unit &lt;chr&gt;, data_value_type_id &lt;chr&gt;,
+## #   data_value_type &lt;chr&gt;, data_value &lt;dbl&gt;, low_confidence_limit &lt;dbl&gt;,
+## #   high_confidence_limit &lt;dbl&gt;, data_value_footnote_symbol &lt;chr&gt;,
+## #   data_value_footnote &lt;chr&gt;, population_count &lt;dbl&gt;, geo_location &lt;chr&gt;,
+## #   category_id &lt;chr&gt;, measure_id &lt;chr&gt;, city_fips &lt;dbl&gt;, tract_fips &lt;dbl&gt;,
+## #   short_question_text &lt;chr&gt;</code></pre>
+<p><br /></p>
+</div>
 </div>
 <div id="findings" class="section level2">
 <h2>Findings</h2>
@@ -463,6 +545,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
 <script>
 $(document).ready(function ()  {

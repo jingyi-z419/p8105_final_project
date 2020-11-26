@@ -6,15 +6,32 @@ output:
 
 ---
 
-```{r}
+```{r setup, include = FALSE}
 library(tidyverse)
 library(flexdashboard)
 library(plotly)
 
+knitr::opts_chunk$set(
+  fig.width = 6,
+  fig.asp = .6,
+  out.width = "90%"
+)
+
+theme_set(theme_minimal() + theme(legend.position = "bottom"))
+          
+options(
+  ggplot2.continuous.colour = "viridis",
+  ggplot2.continuous.fill = "viridis"
+)
+
+scale_colour_discrete = scale_colour_viridis_d
+scale_fill_discrete = scale_fill_viridis_d
+```
+
+
+```{r load_data}
 ny_local = 
-  read_csv("./data/500_Cities.csv") %>% 
-  janitor::clean_names() %>% 
-  filter(state_abbr == "NY")
+  read_csv("./data/ny_local.csv")
 
 covid_symptom_df =
   read_csv("./data/Anxiety_Depression.csv") %>% 
@@ -65,7 +82,8 @@ ub_overall_plot =
     x = "Unhealthy Behavior",
     y = "Prevalence (%)"
   ) +
-  scale_y_continuous(limits = c(0, 100))
+  scale_y_continuous(limits = c(0, 100)) +
+  theme(legend.position = "none")
 
 ggplotly(ub_overall_plot)
 ```
@@ -74,6 +92,7 @@ Column {.tabset}
 -------------------------------------
    
 ### Chart 2
+
 
 ```{r}
 mental_health_value =
@@ -91,7 +110,8 @@ current_smoking_value =
   select(unique_id, value_smoking, population_count)
 
 mental_smoking =
-  left_join(mental_health_value, current_smoking_value)
+  left_join(mental_health_value, current_smoking_value) %>% 
+  drop_na()
 
 
 current_smoking_plot =
@@ -107,7 +127,13 @@ current_smoking_plot =
 
 ggplotly(current_smoking_plot)
 ```   
- 
+
+
+```{r}
+r_smoking = cor(mental_smoking$value_mental, mental_smoking$value_smoking, method = c("pearson"))
+r_smoking
+```
+
 ### Chart 3
     
 ```{r}
@@ -229,13 +255,15 @@ Column
 prevention_plot = 
   ny_local %>% 
   filter(category == "Prevention") %>% 
+  select(measure_id, data_value) %>% 
   group_by(measure_id) %>% 
+  mutate(measure_id = forcats::fct_reorder(measure_id, data_value)) %>% 
   ggplot(aes(x = measure_id, y = data_value, color = measure_id)) +
   geom_boxplot() +
   labs(
        x = "Prevention", 
        y = "Prevalence (%)") +
-  theme(axis.text.x = element_text(angle = 60, hjust = 1))  +
+  theme(axis.text.x = element_text(angle = 60, hjust = 1), legend.position = "none")  +
   scale_y_continuous(limits = c(0, 100))
 
 ggplotly(prevention_plot)
@@ -269,7 +297,7 @@ mental_checkup =
 mental_checkup_plot = 
   mental_checkup %>% 
   ggplot(aes(x = value_mental, y = value_checkup, size = population_count)) +
-  geom_point(color = "steel blue") +
+  geom_point(alpha = 0.5, color = "steel blue") +
   labs(title = "Current Annual Checkup",
        x = 'Mental Health Prevalence (%)', 
        y = 'Prevention Prevalence (%)') +
@@ -294,7 +322,7 @@ mental_insurance =
 mental_insurance_plot = 
   mental_insurance %>%
   ggplot(aes(x = value_mental, y = value_insurance, size = population_count)) +
-  geom_point(color = "chartreuse4") +
+  geom_point(alpha = 0.5, color = "chartreuse4") +
   labs(title = "Current Lack of Insurance",
        x = "Mental Health Prevalence (%)", 
        y = "Prevention Prevalence (%)") +

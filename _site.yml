@@ -11,10 +11,12 @@ navbar:
       href: map_500.html
     - text: "Report"
       href: report.html
-    - icon: <i class="fas fa-brain"></i>
+    - icon: fa-smile fa-lg
       href: https://www.cdc.gov/coronavirus/2019-ncov/daily-life-coping/managing-stress-anxiety.html
     - icon: fa-github fa-lg
       href: https://github.com/jingyi-z419/p8105_final_project
+    - icon: fa-envelope fa-lg
+    - href: mailto:<jz3297@cumc.columbia.edu>
     
 output:
   html_document:

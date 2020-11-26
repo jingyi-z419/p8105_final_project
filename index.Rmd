@@ -8,7 +8,7 @@ output:
 
 <br />
 
-<img src="image/support.jpg" style="width:65%" position="middle">
+<img src="image/support.jpg" style="width:60% height:auto">
 
 <br />
 
@@ -20,7 +20,7 @@ This year is especially challenging for mental health because of the COVID-19 pa
 
 ## Data Description
 
-The main dataset used in this project is [500 Cities: Local Data for Better Health, 2019 release](https://chronicdata.cdc.gov/500-Cities/500-Cities-Local-Data-for-Better-Health-2019-relea/6vp6-wxuq). The 500 Cities project is a collaboration between CDC, the Robert Wood Johnson Foundation, and the CDC foundation. It aims to provide city and census tract-level small area estimates for chronic disease risk factors, health outcomes, and clinical preventive service use for the largest 500 cities in the United States. For this project, we used the complete dataset for the 500 Cities project 2019 release. It contains information recorded from 2016-2017. We filtered the original dataset so that it includes data for New York state. 
+The main dataset used in this project is [500 Cities: Local Data for Better Health, 2019 release](https://chronicdata.cdc.gov/500-Cities/500-Cities-Local-Data-for-Better-Health-2019-relea/6vp6-wxuq). The 500 Cities project is a collaboration between CDC, the Robert Wood Johnson Foundation, and the CDC foundation. It aims to provide city and census tract-level small area estimates for chronic disease risk factors, health outcomes, and clinical preventive service use for the largest 500 cities in the United States. For this project, we used the complete dataset of the 500 Cities project 2019 release. It contains information recorded from 2016-2017. We filtered the original dataset so that it includes data for New York state. 
 
 <br />
 
