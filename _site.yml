@@ -5,7 +5,7 @@ navbar:
   right:
     - text: "Analysis"
       href: analysis.html
-    - text: "Map"
+    - text: "NY Map"
       href: https://cumcp8105finalproject.shinyapps.io/nys_shinymap/
     - text: "Report"
       href: report.html
