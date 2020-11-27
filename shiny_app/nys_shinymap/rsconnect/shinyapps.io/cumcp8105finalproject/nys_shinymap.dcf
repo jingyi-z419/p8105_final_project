@@ -1,0 +1,12 @@
+name: nys_shinymap
+title: nys_shinymap
+username:
+account: cumcp8105finalproject
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3310008
+bundleId: 3912119
+url: https://cumcp8105finalproject.shinyapps.io/nys_shinymap/
+when: 1606471799.90042
+asMultiple: FALSE
+asStatic: FALSE
