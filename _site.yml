@@ -6,9 +6,7 @@ navbar:
     - text: "Analysis"
       href: analysis.html
     - text: "Map"
-      href: map.html
-    - text: "Map_1"
-      href: map_500.html
+      href: https://cumcp8105finalproject.shinyapps.io/nys_shinymap/
     - text: "Report"
       href: report.html
     - icon: fa-smile fa-lg
