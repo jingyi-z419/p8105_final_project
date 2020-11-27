@@ -42,6 +42,36 @@ Mental health disorders, including clinical depression, manic depression, schizo
 
 Facts
 
+```{r, message=F}
+chronic_df = 
+  read_csv("./data/Chronic_Disease_Indicators.csv") %>% 
+  janitor::clean_names()
+
+unhealthy_days_mean_plot = 
+  chronic_df %>% 
+  drop_na(data_value) %>% 
+  mutate(year = year_start) %>% 
+  filter(question == "Recent mentally unhealthy days among adults aged >= 18 years") %>% 
+  group_by(year) %>% 
+  summarise(
+    mean_of_mentally_unhealthy_days = mean(data_value)
+  ) %>% 
+  ggplot(aes(x = year, y = mean_of_mentally_unhealthy_days, color = year)) +
+  geom_point() +
+  geom_line() +
+  scale_x_continuous(
+    breaks = c(2011,2012,2013,2014,2015,2016,2017,2018)) +
+  labs(
+    title = "Average mentally unhealthy days for American adults",
+    x = "Year",
+    y = "Average Days") 
+
+
+
+unhealthy_days_mean_plot
+```
+
+
 Goals of our project
 
 <br />
@@ -64,7 +94,7 @@ Goals of our project
 
 ### Load and tidying the dataset
 
-```{r load_clean_data, message = FALSE}
+```{r load_clean_data, message=F}
 ny_local = 
   read_csv("./data/ny_local.csv")
 
@@ -106,11 +136,155 @@ The mental_care_df contains `r ncol(mental_care_df)` columns and `r nrow(mental_
 
 *All datasets used for this project can be downloaded at [Github project repo](https://github.com/jingyi-z419/p8105_final_project), in the data folder.*
 
-```{r}
+<br />
 
+We first looked at the overall prevalence for each unhealthy behaviors (5) and prevention (10). Risk factor with high prevalence in NY state were "Sleep < 7 hours", "Physical Inactivity", "Taking BP Med", "Annual Checkup", "Cholesterol Screening", "Mammography", and "Pap Smear Test". Risk factor with low prevalence in NY state were "Binge Drinking", "Current Smoking", and "Lack of Health Insurance". Generally speaking, screening and tests had relative high prevalence in NY state. However, there was a high prevalence of not getting enough sleep for NY state residents. 
+
+```{r, message=F, warning=F}
+ub_overall_plot =
+  ny_local %>% 
+  select(category, measure_id, data_value) %>% 
+  filter(category == "Unhealthy Behaviors") %>% 
+  ggplot(aes(x = measure_id, y = data_value, color = measure_id)) +
+  geom_boxplot() +
+  labs(
+    x = "Unhealthy Behavior",
+    y = "Prevalence (%)"
+  ) +
+  scale_y_continuous(limits = c(0, 100)) +
+  theme(legend.position = "none") +
+  scale_x_discrete(labels = c("Binge Drinking", "Current Smoking", "Physical Inactivity", "Obesity", "Sleep < 7 hrs"))
+  
+
+prevention_plot = 
+  ny_local %>% 
+  filter(category == "Prevention") %>% 
+  select(measure_id, data_value) %>% 
+  group_by(measure_id) %>% 
+  ggplot(aes(x = measure_id, y = data_value, color = measure_id)) +
+  geom_boxplot() +
+  labs(
+       x = "Prevention", 
+       y = "Prevalence (%)") +
+  scale_y_continuous(limits = c(0, 100)) +
+  scale_x_discrete(labels = c("Insurance", "BP Med", "Checkup", "Chol Screen", "Colon Screen", "CPS for men", "CPS for women", "Dental", "Mammo", "Pap Test")) +
+    theme(axis.text.x = element_text(angle = 60, hjust = 1), legend.position = "none")
+
+ub_overall_plot
+prevention_plot
 ```
 
+<br />
 
+### Making scatterplots for risk factors
+
+We plotted the prevalence of each unhealthy behaviors and prevention vs. mental health prevalence across NY state in 2016-2017. 
+
+Interactive plots can be viewed [here](analysis.html):
+
+Page 1 -- Unhealthy Behaviors
+Page 2 -- Prevention
+
+<br />
+
+### Making animated scatter plots with regression line
+
+```{r animate_plot, message=F, warning=F}
+library(ggplot2)
+library(gganimate)
+library(transformr)
+
+ny_local_variable =
+  ny_local %>% 
+  filter(short_question_text %in% c("Obesity", "Physical Inactivity", "Sleep <7 hours", "Current Smoking", "Binge Drinking", "Health Insurance", "Annual Checkup", "Cholesterol Screening", "Colorectal Cancer Screening", "Pap Smear Test", "Dental Visit", "Taking BP Medication", "Mammography", "Core preventive services for men", "Core preventive services for women")) %>% 
+  droplevels() %>% 
+  mutate(
+    risk_factor = short_question_text,
+    risk_value = data_value) %>% 
+  select(risk_factor, risk_value, unique_id, population_count)
+
+ny_mental =
+  ny_local %>% 
+  filter(short_question_text == "Mental Health") %>% 
+  droplevels() %>% 
+  mutate(
+    mental_value = data_value
+  ) %>% 
+  select(mental_value, unique_id)
+
+ny_mental_combined =
+  left_join(ny_local_variable, ny_mental)
+
+
+p = ny_mental_combined %>% 
+  ggplot(aes(x = mental_value, y = risk_value, frame = risk_factor)) +
+  geom_point(aes(size = population_count, color = risk_factor), alpha = 0.5) +
+  geom_smooth(aes(group = risk_factor), method = "lm", se = TRUE, color = "red", size = 0.5) +
+  labs(
+    title = "{closest_state}",
+    x = "Mental Health Prevalence (%)",
+    y = "Risk Factor Prevalence (%)",
+    color = "Risk Factor"
+  ) +
+  scale_y_continuous(limits = c(0, 100)) +
+  theme(plot.title = element_text(size = 35),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18)) + 
+  theme(legend.position = "none") +
+  transition_states(risk_factor, transition_length = 1, state_length = 3, wrap = TRUE) +
+  enter_fade() +
+  exit_fade()
+
+animate(p, fps = 2, height = 600, width = 1000)
+```
+
+<br />
+
+### Making correlation plot for risk factor and mental health
+
+```{r correlation_r, message=F, warning=F}
+library(corrplot)
+
+# Census Tract r
+ny_local_wide_census =
+  ny_local %>% 
+  filter(state_desc == "New York",
+         geographic_level == "Census Tract",
+         !is.na(data_value),
+         measure_id %in% c("MHLTH", "ACCESS2", "BINGE", "BPMED", "OBESITY", "CHECKUP", 
+                         "CHOLSCREEN", "CSMOKING", "COLON_SCREEN", "DENTAL", 
+                         "LPA", "MAMMOUSE", "PAPTEST", "SLEEP", "COREW", "COREM")) %>%
+  droplevels() %>% 
+  select(unique_id, population_count, data_value, short_question_text) %>% 
+  pivot_wider(
+    names_from = short_question_text, 
+    values_from = data_value) %>% 
+  janitor::clean_names()
+
+
+# Make the correlation plot
+ny_local_wide_census %>% 
+  select(everything(), -unique_id, -population_count) %>%
+  select(mental_health, everything()) %>% 
+  rename("Mental Health" = mental_health,
+         "Binge Drinking" = binge_drinking,
+         "Sleep<7 hrs" = sleep_7_hours,
+         "Obesity" = obesity,
+         "Physical Inactivity" = physical_inactivity,
+         "Current Smoking" = current_smoking,
+         "No Insurance" = health_insurance,
+         "Annual Checkup" = annual_checkup,
+         "Cholesterol Screen" = cholesterol_screening,
+         "Dental Visit" = dental_visit,
+         "Take BP Med" = taking_bp_medication,
+         "Mammography" = mammography,
+         "Pap Smear Test" = pap_smear_test,
+         "Colon Screen" = colorectal_cancer_screening,
+         "CPS Men" = core_preventive_services_for_older_men,
+         "CPS Women" = core_preventive_services_for_older_women) %>%
+  cor(use = "complete.obs") %>% 
+  corrplot(method = "number", type = "lower", diag = FALSE, addCoef.col = "grey", tl.col = "black", tl.srt = 10, insig = "blank", number.cex = .5)
+```
 
 
 <br />

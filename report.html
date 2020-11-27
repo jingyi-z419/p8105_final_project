@@ -421,6 +421,33 @@ div.tocify {
 <p>Mental health disorders, including clinical depression, manic depression, schizophrenia, and obsessive-compulsive disorder, account for several of the top causes of disability in the United States and worldwide. An estimated 26% of Americans ages 18 and older – about 1 in 4 adults – suffers from a diagnosable mental disorder in a given year. As residents-to-be, we are collectively interested in investigating the risk factors that contribute to mental health disorders in New York State and hopefully providing some insightful analysis on mental health related concerns in this COVID-19 era. *<a href="https://www.hopkinsmedicine.org/health/wellness-and-prevention/mental-health-disorder-statistics#:~:text=An%20estimated%2026%25%20of%20Americans,substance%20abuse%20and%20anxiety%20disorders.">Cited from JHU Medicine</a></p>
 <p><img src="image/depress_rain.gif" style="width:60%"></p>
 <p>Facts</p>
+<pre class="r"><code>chronic_df = 
+  read_csv(&quot;./data/Chronic_Disease_Indicators.csv&quot;) %&gt;% 
+  janitor::clean_names()
+
+unhealthy_days_mean_plot = 
+  chronic_df %&gt;% 
+  drop_na(data_value) %&gt;% 
+  mutate(year = year_start) %&gt;% 
+  filter(question == &quot;Recent mentally unhealthy days among adults aged &gt;= 18 years&quot;) %&gt;% 
+  group_by(year) %&gt;% 
+  summarise(
+    mean_of_mentally_unhealthy_days = mean(data_value)
+  ) %&gt;% 
+  ggplot(aes(x = year, y = mean_of_mentally_unhealthy_days, color = year)) +
+  geom_point() +
+  geom_line() +
+  scale_x_continuous(
+    breaks = c(2011,2012,2013,2014,2015,2016,2017,2018)) +
+  labs(
+    title = &quot;Average mentally unhealthy days for American adults&quot;,
+    x = &quot;Year&quot;,
+    y = &quot;Average Days&quot;) 
+
+
+
+unhealthy_days_mean_plot</code></pre>
+<p><img src="report_files/figure-html/unnamed-chunk-1-1.png" width="90%" /></p>
 <p>Goals of our project</p>
 <p><br /></p>
 </div>
@@ -473,28 +500,145 @@ mental_care_df =
 <p>Besides the main dataset, we included two more datasets related to the impacts of COVID-19 on mental health. Those two datasets can be accessed through <a href="https://data.cdc.gov/NCHS/Indicators-of-Anxiety-or-Depression-Based-on-Repor/8pt5-q6wp">Indicators of Anxiety or Depression COVID-19</a> and <a href="https://data.cdc.gov/NCHS/Mental-Health-Care-in-the-Last-4-Weeks/yni7-er2q">Mental Health Care COVID-19</a>. The indicators of Anxiety or Depression dataset was named as covid_symptom_df and the Mental Health Care dataset was named as mental_care_df.</p>
 <p>The covid_symptom_df contains 13 columns and 54 rows. The mental_care_df contains 14 columns and 24 rows. There were 24 missing values in the dataset. Since the missing values were not in the variables of interest, we decided to keep them.</p>
 <p><em>All datasets used for this project can be downloaded at <a href="https://github.com/jingyi-z419/p8105_final_project">Github project repo</a>, in the data folder.</em></p>
-<pre class="r"><code>ny_local %&gt;% 
-  filter</code></pre>
-<pre><code>## # A tibble: 70,133 x 24
-##     year state_abbr state_desc city_name geographic_level data_source category
-##    &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;            &lt;chr&gt;       &lt;chr&gt;   
-##  1  2016 NY         New York   Buffalo   Census Tract     BRFSS       Unhealt…
-##  2  2017 NY         New York   New York  Census Tract     BRFSS       Health …
-##  3  2017 NY         New York   New Roch… Census Tract     BRFSS       Health …
-##  4  2017 NY         New York   New York  Census Tract     BRFSS       Prevent…
-##  5  2017 NY         New York   New York  Census Tract     BRFSS       Prevent…
-##  6  2017 NY         New York   New York  Census Tract     BRFSS       Unhealt…
-##  7  2017 NY         New York   Buffalo   Census Tract     BRFSS       Prevent…
-##  8  2017 NY         New York   Buffalo   Census Tract     BRFSS       Unhealt…
-##  9  2017 NY         New York   New York  Census Tract     BRFSS       Unhealt…
-## 10  2016 NY         New York   Mount Ve… Census Tract     BRFSS       Prevent…
-## # … with 70,123 more rows, and 17 more variables: unique_id &lt;chr&gt;,
-## #   measure &lt;chr&gt;, data_value_unit &lt;chr&gt;, data_value_type_id &lt;chr&gt;,
-## #   data_value_type &lt;chr&gt;, data_value &lt;dbl&gt;, low_confidence_limit &lt;dbl&gt;,
-## #   high_confidence_limit &lt;dbl&gt;, data_value_footnote_symbol &lt;chr&gt;,
-## #   data_value_footnote &lt;chr&gt;, population_count &lt;dbl&gt;, geo_location &lt;chr&gt;,
-## #   category_id &lt;chr&gt;, measure_id &lt;chr&gt;, city_fips &lt;dbl&gt;, tract_fips &lt;dbl&gt;,
-## #   short_question_text &lt;chr&gt;</code></pre>
+<p><br /></p>
+<p>We first looked at the overall prevalence for each unhealthy behaviors (5) and prevention (10). Risk factor with high prevalence in NY state were “Sleep &lt; 7 hours”, “Physical Inactivity”, “Taking BP Med”, “Annual Checkup”, “Cholesterol Screening”, “Mammography”, and “Pap Smear Test”. Risk factor with low prevalence in NY state were “Binge Drinking”, “Current Smoking”, and “Lack of Health Insurance”. Generally speaking, screening and tests had relative high prevalence in NY state. However, there was a high prevalence of not getting enough sleep for NY state residents.</p>
+<pre class="r"><code>ub_overall_plot =
+  ny_local %&gt;% 
+  select(category, measure_id, data_value) %&gt;% 
+  filter(category == &quot;Unhealthy Behaviors&quot;) %&gt;% 
+  ggplot(aes(x = measure_id, y = data_value, color = measure_id)) +
+  geom_boxplot() +
+  labs(
+    x = &quot;Unhealthy Behavior&quot;,
+    y = &quot;Prevalence (%)&quot;
+  ) +
+  scale_y_continuous(limits = c(0, 100)) +
+  theme(legend.position = &quot;none&quot;) +
+  scale_x_discrete(labels = c(&quot;Binge Drinking&quot;, &quot;Current Smoking&quot;, &quot;Physical Inactivity&quot;, &quot;Obesity&quot;, &quot;Sleep &lt; 7 hrs&quot;))
+  
+
+prevention_plot = 
+  ny_local %&gt;% 
+  filter(category == &quot;Prevention&quot;) %&gt;% 
+  select(measure_id, data_value) %&gt;% 
+  group_by(measure_id) %&gt;% 
+  ggplot(aes(x = measure_id, y = data_value, color = measure_id)) +
+  geom_boxplot() +
+  labs(
+       x = &quot;Prevention&quot;, 
+       y = &quot;Prevalence (%)&quot;) +
+  scale_y_continuous(limits = c(0, 100)) +
+  scale_x_discrete(labels = c(&quot;Insurance&quot;, &quot;BP Med&quot;, &quot;Checkup&quot;, &quot;Chol Screen&quot;, &quot;Colon Screen&quot;, &quot;CPS for men&quot;, &quot;CPS for women&quot;, &quot;Dental&quot;, &quot;Mammo&quot;, &quot;Pap Test&quot;)) +
+    theme(axis.text.x = element_text(angle = 60, hjust = 1), legend.position = &quot;none&quot;)
+
+ub_overall_plot</code></pre>
+<p><img src="report_files/figure-html/unnamed-chunk-2-1.png" width="90%" /></p>
+<pre class="r"><code>prevention_plot</code></pre>
+<p><img src="report_files/figure-html/unnamed-chunk-2-2.png" width="90%" /></p>
+<p><br /></p>
+</div>
+<div id="making-scatterplots-for-risk-factors" class="section level3">
+<h3>Making scatterplots for risk factors</h3>
+<p>We plotted the prevalence of each unhealthy behaviors and prevention vs. mental health prevalence across NY state in 2016-2017.</p>
+<p>Interactive plots can be viewed <a href="analysis.html">here</a>:</p>
+<p>Page 1 – Unhealthy Behaviors Page 2 – Prevention</p>
+<p><br /></p>
+</div>
+<div id="making-animated-scatter-plots-with-regression-line" class="section level3">
+<h3>Making animated scatter plots with regression line</h3>
+<pre class="r"><code>library(ggplot2)
+library(gganimate)
+library(transformr)
+
+ny_local_variable =
+  ny_local %&gt;% 
+  filter(short_question_text %in% c(&quot;Obesity&quot;, &quot;Physical Inactivity&quot;, &quot;Sleep &lt;7 hours&quot;, &quot;Current Smoking&quot;, &quot;Binge Drinking&quot;, &quot;Health Insurance&quot;, &quot;Annual Checkup&quot;, &quot;Cholesterol Screening&quot;, &quot;Colorectal Cancer Screening&quot;, &quot;Pap Smear Test&quot;, &quot;Dental Visit&quot;, &quot;Taking BP Medication&quot;, &quot;Mammography&quot;, &quot;Core preventive services for men&quot;, &quot;Core preventive services for women&quot;)) %&gt;% 
+  droplevels() %&gt;% 
+  mutate(
+    risk_factor = short_question_text,
+    risk_value = data_value) %&gt;% 
+  select(risk_factor, risk_value, unique_id, population_count)
+
+ny_mental =
+  ny_local %&gt;% 
+  filter(short_question_text == &quot;Mental Health&quot;) %&gt;% 
+  droplevels() %&gt;% 
+  mutate(
+    mental_value = data_value
+  ) %&gt;% 
+  select(mental_value, unique_id)
+
+ny_mental_combined =
+  left_join(ny_local_variable, ny_mental)
+
+
+p = ny_mental_combined %&gt;% 
+  ggplot(aes(x = mental_value, y = risk_value, frame = risk_factor)) +
+  geom_point(aes(size = population_count, color = risk_factor), alpha = 0.5) +
+  geom_smooth(aes(group = risk_factor), method = &quot;lm&quot;, se = TRUE, color = &quot;red&quot;, size = 0.5) +
+  labs(
+    title = &quot;{closest_state}&quot;,
+    x = &quot;Mental Health Prevalence (%)&quot;,
+    y = &quot;Risk Factor Prevalence (%)&quot;,
+    color = &quot;Risk Factor&quot;
+  ) +
+  scale_y_continuous(limits = c(0, 100)) +
+  theme(plot.title = element_text(size = 35),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 18)) + 
+  theme(legend.position = &quot;none&quot;) +
+  transition_states(risk_factor, transition_length = 1, state_length = 3, wrap = TRUE) +
+  enter_fade() +
+  exit_fade()
+
+animate(p, fps = 2, height = 600, width = 1000)</code></pre>
+<p><img src="report_files/figure-html/animate_plot-1.gif" width="90%" /></p>
+<p><br /></p>
+</div>
+<div id="making-correlation-plot-for-risk-factor-and-mental-health" class="section level3">
+<h3>Making correlation plot for risk factor and mental health</h3>
+<pre class="r"><code>library(corrplot)
+
+# Census Tract r
+ny_local_wide_census =
+  ny_local %&gt;% 
+  filter(state_desc == &quot;New York&quot;,
+         geographic_level == &quot;Census Tract&quot;,
+         !is.na(data_value),
+         measure_id %in% c(&quot;MHLTH&quot;, &quot;ACCESS2&quot;, &quot;BINGE&quot;, &quot;BPMED&quot;, &quot;OBESITY&quot;, &quot;CHECKUP&quot;, 
+                         &quot;CHOLSCREEN&quot;, &quot;CSMOKING&quot;, &quot;COLON_SCREEN&quot;, &quot;DENTAL&quot;, 
+                         &quot;LPA&quot;, &quot;MAMMOUSE&quot;, &quot;PAPTEST&quot;, &quot;SLEEP&quot;, &quot;COREW&quot;, &quot;COREM&quot;)) %&gt;%
+  droplevels() %&gt;% 
+  select(unique_id, population_count, data_value, short_question_text) %&gt;% 
+  pivot_wider(
+    names_from = short_question_text, 
+    values_from = data_value) %&gt;% 
+  janitor::clean_names()
+
+
+# Make the correlation plot
+ny_local_wide_census %&gt;% 
+  select(everything(), -unique_id, -population_count) %&gt;%
+  select(mental_health, everything()) %&gt;% 
+  rename(&quot;Mental Health&quot; = mental_health,
+         &quot;Binge Drinking&quot; = binge_drinking,
+         &quot;Sleep&lt;7 hrs&quot; = sleep_7_hours,
+         &quot;Obesity&quot; = obesity,
+         &quot;Physical Inactivity&quot; = physical_inactivity,
+         &quot;Current Smoking&quot; = current_smoking,
+         &quot;No Insurance&quot; = health_insurance,
+         &quot;Annual Checkup&quot; = annual_checkup,
+         &quot;Cholesterol Screen&quot; = cholesterol_screening,
+         &quot;Dental Visit&quot; = dental_visit,
+         &quot;Take BP Med&quot; = taking_bp_medication,
+         &quot;Mammography&quot; = mammography,
+         &quot;Pap Smear Test&quot; = pap_smear_test,
+         &quot;Colon Screen&quot; = colorectal_cancer_screening,
+         &quot;CPS Men&quot; = core_preventive_services_for_older_men,
+         &quot;CPS Women&quot; = core_preventive_services_for_older_women) %&gt;%
+  cor(use = &quot;complete.obs&quot;) %&gt;% 
+  corrplot(method = &quot;number&quot;, type = &quot;lower&quot;, diag = FALSE, addCoef.col = &quot;grey&quot;, tl.col = &quot;black&quot;, tl.srt = 10, insig = &quot;blank&quot;, number.cex = .5)</code></pre>
+<p><img src="report_files/figure-html/correlation_r-1.png" width="90%" /></p>
 <p><br /></p>
 </div>
 </div>

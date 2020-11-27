@@ -1,5 +1,5 @@
 ---
-title: "Analysis Plots"
+title: "Risk Factors for Mental Health"
 output: 
   flexdashboard::flex_dashboard:
     theme: simplex
@@ -56,10 +56,6 @@ mental_care_df =
       indicator == "Took Prescription Medication for Mental Health, Last 4 Weeks" ~ "Med"
     )
   )
-
-chronic_df = 
-  read_csv("./data/Chronic_Disease_Indicators.csv") %>% 
-  janitor::clean_names()
 ```
 
 ```{r}
@@ -87,7 +83,8 @@ ub_overall_plot =
     y = "Prevalence (%)"
   ) +
   scale_y_continuous(limits = c(0, 100)) +
-  theme(legend.position = "none")
+  theme(legend.position = "none") +
+  scale_x_discrete(labels = c("Binge Drinking", "Current Smoking", "Physical Inactivity", "Obesity", "Sleep < 7 hrs"))
 
 ggplotly(ub_overall_plot)
 ```
@@ -131,12 +128,6 @@ current_smoking_plot =
 
 ggplotly(current_smoking_plot)
 ```   
-
-
-```{r}
-r_smoking = cor(mental_smoking$value_mental, mental_smoking$value_smoking, method = c("pearson"))
-r_smoking
-```
 
 ### Chart 3
     
@@ -261,14 +252,14 @@ prevention_plot =
   filter(category == "Prevention") %>% 
   select(measure_id, data_value) %>% 
   group_by(measure_id) %>% 
-  mutate(measure_id = forcats::fct_reorder(measure_id, data_value)) %>% 
   ggplot(aes(x = measure_id, y = data_value, color = measure_id)) +
   geom_boxplot() +
   labs(
        x = "Prevention", 
        y = "Prevalence (%)") +
   theme(axis.text.x = element_text(angle = 60, hjust = 1), legend.position = "none")  +
-  scale_y_continuous(limits = c(0, 100))
+  scale_y_continuous(limits = c(0, 100)) +
+  scale_x_discrete(labels = c("Health Insurance", "BP Med", "Annual Checkup", "Cholesterol Screening", "Colon Screening", "Core preventive services for men", "Core preventive services for women", "Dental Visit", "Mammography", "Pap Smear Test"))
 
 ggplotly(prevention_plot)
 ```
@@ -335,15 +326,234 @@ mental_insurance_plot =
 ggplotly(mental_insurance_plot)
 ```
 
+### Chart 4
 
- 
-Page 3 {data-orientation=rows}
+```{r}
+bp_med_df =
+  ny_local %>% 
+  select(unique_id, data_value, measure_id, population_count) %>% 
+  filter(measure_id == "BPMED") %>% 
+  mutate(value_bp_med = data_value) %>% 
+  select(unique_id, value_bp_med, population_count)
+
+mental_bp_med = 
+  left_join(mental_health_df, bp_med_df)
+
+mental_bp_med_plot = 
+  mental_bp_med %>%
+  ggplot(aes(x = value_mental, y = value_bp_med, size = population_count)) +
+  geom_point(alpha = 0.5, color = "#CCCC00") +
+  labs(title = "Taking BP Medication",
+       x = "Mental Health Prevalence (%)", 
+       y = "Prevention Prevalence (%)") +
+  scale_y_continuous(limits = c(0, 100))
+
+ggplotly(mental_bp_med_plot)
+```
+
+### Chart 5
+
+```{r}
+cholest_df =
+  ny_local %>% 
+  select(unique_id, data_value, measure_id, population_count) %>% 
+  filter(measure_id == "CHOLSCREEN") %>% 
+  mutate(value_cholest = data_value) %>% 
+  select(unique_id, value_cholest, population_count)
+
+mental_cholest = 
+  left_join(mental_health_df, cholest_df)
+
+mental_cholest_plot = 
+  mental_cholest %>%
+  ggplot(aes(x = value_mental, y = value_cholest, size = population_count)) +
+  geom_point(alpha = 0.5, color = "#FF6666") +
+  labs(title = "Cholesterol Screening",
+       x = "Mental Health Prevalence (%)", 
+       y = "Prevention Prevalence (%)") +
+  scale_y_continuous(limits = c(0, 100))
+
+ggplotly(mental_cholest_plot)
+```
+
+### Chart 6
+
+```{r}
+colon_df =
+  ny_local %>% 
+  select(unique_id, data_value, measure_id, population_count) %>% 
+  filter(measure_id == "COLON_SCREEN") %>% 
+  mutate(value_colon = data_value) %>% 
+  select(unique_id, value_colon, population_count)
+
+mental_colon = 
+  left_join(mental_health_df, colon_df)
+
+mental_colon_plot = 
+  mental_colon %>%
+  ggplot(aes(x = value_mental, y = value_colon, size = population_count)) +
+  geom_point(alpha = 0.5, color = "#993399") +
+  labs(title = "Colorectal Cancer Screening",
+       x = "Mental Health Prevalence (%)", 
+       y = "Prevention Prevalence (%)") +
+  scale_y_continuous(limits = c(0, 100))
+
+ggplotly(mental_colon_plot)
+```
+
+### Chart 7
+
+```{r}
+dental_df =
+  ny_local %>% 
+  select(unique_id, data_value, measure_id, population_count) %>% 
+  filter(measure_id == "DENTAL") %>% 
+  mutate(value_dental = data_value) %>% 
+  select(unique_id, value_dental, population_count)
+
+mental_dental = 
+  left_join(mental_health_df, dental_df)
+
+mental_dental_plot = 
+  mental_dental %>%
+  ggplot(aes(x = value_mental, y = value_dental, size = population_count)) +
+  geom_point(alpha = 0.5, color = "#66CCFF") +
+  labs(title = "Dental Visit",
+       x = "Mental Health Prevalence (%)", 
+       y = "Prevention Prevalence (%)") +
+  scale_y_continuous(limits = c(0, 100))
+
+ggplotly(mental_dental_plot)
+```
+
+### Chart 8
+
+```{r}
+mammography_df =
+  ny_local %>% 
+  select(unique_id, data_value, measure_id, population_count) %>% 
+  filter(measure_id == "MAMMOUSE") %>% 
+  mutate(value_mammography = data_value) %>% 
+  select(unique_id, value_mammography, population_count)
+
+mental_mammography = 
+  left_join(mental_health_df, mammography_df)
+
+mental_mammography_plot = 
+  mental_mammography %>%
+  ggplot(aes(x = value_mental, y = value_mammography, size = population_count)) +
+  geom_point(alpha = 0.5, color = "#00CC66") +
+  labs(title = "Mammography",
+       x = "Mental Health Prevalence (%)", 
+       y = "Prevention Prevalence (%)") +
+  scale_y_continuous(limits = c(0, 100))
+
+ggplotly(mental_mammography_plot)
+```
+
+### Chart 9
+
+```{r}
+pap_smear_df =
+  ny_local %>% 
+  select(unique_id, data_value, measure_id, population_count) %>% 
+  filter(measure_id == "PAPTEST") %>% 
+  mutate(value_pap_smear = data_value) %>% 
+  select(unique_id, value_pap_smear, population_count)
+
+mental_pap_smear = 
+  left_join(mental_health_df, pap_smear_df)
+
+mental_pap_smear_plot = 
+  mental_pap_smear %>%
+  ggplot(aes(x = value_mental, y = value_pap_smear, size = population_count)) +
+  geom_point(alpha = 0.5, color = "#CC9900") +
+  labs(title = "Pap Smear Test",
+       x = "Mental Health Prevalence (%)", 
+       y = "Prevention Prevalence (%)") +
+  scale_y_continuous(limits = c(0, 100))
+
+ggplotly(mental_pap_smear_plot)
+```
+
+### Chart 10
+
+```{r}
+cpmen_df =
+  ny_local %>% 
+  select(unique_id, data_value, measure_id, population_count) %>% 
+  filter(measure_id == "COREM") %>% 
+  mutate(value_cpmen = data_value) %>% 
+  select(unique_id, value_cpmen, population_count)
+
+mental_cpmen = 
+  left_join(mental_health_df, cpmen_df)
+
+mental_cpmen_plot = 
+  mental_cpmen %>%
+  ggplot(aes(x = value_mental, y = value_cpmen, size = population_count)) +
+  geom_point(alpha = 0.5, color = "#FFCC33") +
+  labs(title = "Core Preventive Services for Men",
+       x = "Mental Health Prevalence (%)", 
+       y = "Prevention Prevalence (%)") +
+  scale_y_continuous(limits = c(0, 100))
+
+ggplotly(mental_cpmen_plot)
+```
+
+### Chart 11
+
+```{r}
+cpwomen_df =
+  ny_local %>% 
+  select(unique_id, data_value, measure_id, population_count) %>% 
+  filter(measure_id == "COREW") %>% 
+  mutate(value_cpwomen = data_value) %>% 
+  select(unique_id, value_cpwomen, population_count)
+
+mental_cpwomen = 
+  left_join(mental_health_df, cpwomen_df)
+
+mental_cpwomen_plot = 
+  mental_cpwomen %>%
+  ggplot(aes(x = value_mental, y = value_cpwomen, size = population_count)) +
+  geom_point(alpha = 0.5, color = "#FF9966") +
+  labs(title = "Core Preventive Services for Women",
+       x = "Mental Health Prevalence (%)", 
+       y = "Prevention Prevalence (%)") +
+  scale_y_continuous(limits = c(0, 100))
+
+ggplotly(mental_cpwomen_plot)
+```
+
+
+Page 3 {data-orientation=columns}
 =====================================  
 
-Row {data-height=500}
+Column
 -------------------------------------
 
 ### Chart 1
+
+
+```{r}
+treatment_plot =
+  mental_care_df %>% 
+  ggplot(aes(x = indicator_id, y = value, color = indicator_id)) +
+  geom_boxplot() +
+  labs(
+    x = "Treatment",
+    y = "Percentage"
+  ) +
+  theme(legend.position = "none")
+
+ggplotly(treatment_plot)
+```
+
+Column {.tabset}
+-------------------------------------
+
+### Chart 2
 
 ```{r}
 anxiety_depression_plot =  
@@ -358,15 +568,13 @@ anxiety_depression_plot =
   labs(
     x = "Time (week)",
     y = "Percentage"
-  )
+  ) +
+  theme(legend.position = "none")
 
 ggplotly(anxiety_depression_plot)
 ```
 
-Row {data-height=500}
--------------------------------------
-
-### Chart 2
+### Chart 3
   
 ```{r}
 mental_care_plot =
@@ -377,48 +585,10 @@ mental_care_plot =
   labs(
     x = "Time (week)",
     y = "Percentage"
-  )
+  ) +
+  theme(legend.position = "none")
 
 ggplotly(mental_care_plot)
 ```
 
-
-
-```{r}
-treatment_plot =
-  mental_care_df %>% 
-  ggplot(aes(x = indicator_id, y = value, color = indicator_id)) +
-  geom_boxplot() +
-  labs(
-    x = "Treatment",
-    y = "Percentage"
-  )
-
-ggplotly(treatment_plot)
-```
-
-```{r}
-unhealthy_days_mean_plot = 
-  chronic_df %>% 
-  drop_na(data_value) %>% 
-  mutate(year = year_start) %>% 
-  filter(question == "Recent mentally unhealthy days among adults aged >= 18 years") %>% 
-  group_by(year) %>% 
-  summarise(
-    mean_of_mentally_unhealthy_days = mean(data_value)
-  ) %>% 
-  ggplot(aes(x = year, y = mean_of_mentally_unhealthy_days, color = year)) +
-  geom_point() +
-  geom_line() +
-  scale_x_continuous(
-    breaks = c(2011,2012,2013,2014,2015,2016,2017,2018)) +
-  labs(
-    title = "The average mentally unhealthy days for American adults from 2011 to 2018",
-    x = "Year",
-    y = "The average mentally unhealthy days") 
-
-
-
-unhealthy_days_mean_plot
-```
 
