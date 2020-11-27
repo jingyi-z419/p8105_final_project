@@ -34,7 +34,7 @@ scale_fill_discrete = scale_fill_viridis_d
 
 <br />
 
-## Motivation
+# Motivation
 
 Mental health disorders, including clinical depression, manic depression, schizophrenia, and obsessive-compulsive disorder, account for several of the top causes of disability in the United States and worldwide. An estimated 26% of Americans ages 18 and older -- about 1 in 4 adults -- suffers from a diagnosable mental disorder in a given year. As residents-to-be, we are collectively interested in investigating the risk factors that contribute to mental health disorders in New York State and hopefully providing some insightful analysis on mental health related concerns in this COVID-19 era. *[Cited from JHU Medicine](https://www.hopkinsmedicine.org/health/wellness-and-prevention/mental-health-disorder-statistics#:~:text=An%20estimated%2026%25%20of%20Americans,substance%20abuse%20and%20anxiety%20disorders.)
 
@@ -76,23 +76,52 @@ Goals of our project
 
 <br />
 
-## Related Work
+# Related Work
 
 <br />
 
-## Initial questions
+# Initial questions
 
 <br />
 
-## Data
+# Data
+
+The main dataset used for this project was [500 Cities: Local Data for Better Health, 2019 release](https://chronicdata.cdc.gov/500-Cities/500-Cities-Local-Data-for-Better-Health-2019-relea/6vp6-wxuq). The 500 Cities project is a collaboration between CDC, the Robert Wood Johnson Foundation, and the CDC foundation. This project includes city and census tract-level data, obtained using small area estimation methods, for 27 chronic disease measures for the 500 largest American cities. The implications of this dataset are to help develop and implement effective and prevention activities, identify emerging health problems, and establish and monitor key health objectives.   
+
+Risk factors we assessed in this project (15 total):
+
+Unhealthy Behaviors (5):
+
+* **Binge Drinking**: Adults aged ≥18 years who report having five or more drinks (men) or four or more drinks (women) on an occasion in the past 30 days.
+* **Current Smoking**: Respondents aged ≥18 years who report having smoked ≥100 cigarettes in their lifetime and currently smoke every day or some days.
+* **Sleep < 7 hours**: Respondents aged ≥18 years who report usually getting insufficient sleep (<7 hours for those aged ≥18 years, on average, during a 24-hour period).
+* **Obesity**: Respondents aged ≥18 years who have a body mass index (BMI) ≥30.0 kg/m² calculated from self-reported weight and height.
+* **Physical Inactivity**: Respondents who answered “no” to the following question: “During the past month, other than your regular job, did you participate in any physical activities or exercises such as running, calisthenics, golf, gardening, or walking for exercise?”
+
+Prevention (10):
+
+* **Health Insurance**: Respondents aged 18–64 years who report having no current health insurance coverage.
+* **Annual Checkup**: Respondents aged ≥18 years who report having been to a doctor for a routine checkup in the previous year.
+* **Dental Visit**: Respondents aged ≥18 years who report having been to the dentist or dental clinic in the previous year.
+* **Mammography**: Female respondents aged 50–74 years who report having had a mammogram within the previous 2 years.
+* **Colorectal Cancer Screening**: Fecal occult blood test, sigmoidoscopy, or colonoscopy among adults aged 50–75 years.
+* **Core Preventive Services for Older Men**: Older adults aged ≥65 years who are up to date on a core set of clinical preventive services for men.
+* **Core Preventive Services for Older Women**: Older adults aged ≥65 years who are up to date on a core set of clinical preventive services for women.
+* **Taking BP Medication**: Respondents aged ≥18 years who report taking medicine for high blood pressure.
+* **Pap Smear Test**: Female respondents aged 21–65 years who do not report having had a hysterectomy and who report having had a Papanicolaou (Pap) smear within the previous 3 years
+* **Cholesterol Screening**: Respondents aged ≥18 years who report having their cholesterol checked within the previous 5 years.
+
+Besides the main dataset, we included two more datasets related to the impacts of COVID-19 on mental health. Those two datasets can be accessed through [Indicators of Anxiety or Depression COVID-19](https://data.cdc.gov/NCHS/Indicators-of-Anxiety-or-Depression-Based-on-Repor/8pt5-q6wp) and [Mental Health Care COVID-19](https://data.cdc.gov/NCHS/Mental-Health-Care-in-the-Last-4-Weeks/yni7-er2q). 
+
+Both datasets are part of the Household Pulse Survey which is launched by the U.S. Census Bureau, in collaboration with five federal agencies. The purpose of this survey is to collect data on the social and economic impacts of COVID-19 on American households. 
+
+*All datasets used for this project can be downloaded at [Github project repo](https://github.com/jingyi-z419/p8105_final_project), in the data folder.*
 
 <br />
 
-## Exploratoy Analysis
+# Exploratoy Analysis
 
-<br />
-
-### Load and tidying the dataset
+## Load and tidying the datasets
 
 ```{r load_clean_data, message=F}
 ny_local = 
@@ -123,20 +152,18 @@ mental_care_df =
   )
 ```
 
-The main dataset used for this project was [500 Cities: Local Data for Better Health, 2019 release](https://chronicdata.cdc.gov/500-Cities/500-Cities-Local-Data-for-Better-Health-2019-relea/6vp6-wxuq). The 500 Cities project is a collaboration between CDC, the Robert Wood Johnson Foundation, and the CDC foundation. It aims to provide city and census tract-level small area estimates for chronic disease risk factors, health outcomes, and clinical preventive service use for the largest 500 cities in the United States. 
-
 For this project, we used the complete dataset of the 500 Cities project 2019 release. It contains information recorded from 2016-2017. We filtered the original dataset so that it includes data for New York state only. The filtered dataset was named as ny_local, it was saved as a csv file and uploaded to the project repository on Github. 
 
 The ny_local dataset contains `r ncol(ny_local)` columns and `r nrow(ny_local)` rows. There were `r sum(is.na(ny_local))` missing values in the dataset. Majority of these NAs were not in the main variables of interest. Thus, we decided to keep those values for plots and remove them for statistical analysis. 
 
-Besides the main dataset, we included two more datasets related to the impacts of COVID-19 on mental health. Those two datasets can be accessed through [Indicators of Anxiety or Depression COVID-19](https://data.cdc.gov/NCHS/Indicators-of-Anxiety-or-Depression-Based-on-Repor/8pt5-q6wp) and [Mental Health Care COVID-19](https://data.cdc.gov/NCHS/Mental-Health-Care-in-the-Last-4-Weeks/yni7-er2q). The indicators of Anxiety or Depression dataset was named as covid_symptom_df and the Mental Health Care dataset was named as mental_care_df.
+The indicators of Anxiety or Depression dataset was named as covid_symptom_df and the Mental Health Care dataset was named as mental_care_df. We also filtered the datasets for New York state only.
 
 The covid_symptom_df contains `r ncol(covid_symptom_df)` columns and `r nrow(covid_symptom_df)` rows. 
 The mental_care_df contains `r ncol(mental_care_df)` columns and `r nrow(mental_care_df)` rows. There were `r sum(is.na(mental_care_df))` missing values in the dataset. Since the missing values were not in the variables of interest, we decided to keep them. 
 
-*All datasets used for this project can be downloaded at [Github project repo](https://github.com/jingyi-z419/p8105_final_project), in the data folder.*
-
 <br />
+
+## 500 Cities dataset
 
 We first looked at the overall prevalence for each unhealthy behaviors (5) and prevention (10). Risk factor with high prevalence in NY state were "Sleep < 7 hours", "Physical Inactivity", "Taking BP Med", "Annual Checkup", "Cholesterol Screening", "Mammography", and "Pap Smear Test". Risk factor with low prevalence in NY state were "Binge Drinking", "Current Smoking", and "Lack of Health Insurance". Generally speaking, screening and tests had relative high prevalence in NY state. However, there was a high prevalence of not getting enough sleep for NY state residents. 
 
@@ -183,11 +210,12 @@ We plotted the prevalence of each unhealthy behaviors and prevention vs. mental 
 Interactive plots can be viewed [here](analysis.html):
 
 Page 1 -- Unhealthy Behaviors
+
 Page 2 -- Prevention
 
 <br />
 
-### Making animated scatter plots with regression line
+### Making animated scatterplots with regression line
 
 ```{r animate_plot, message=F, warning=F}
 library(ggplot2)
@@ -242,6 +270,8 @@ animate(p, fps = 2, height = 600, width = 1000)
 
 ### Making correlation plot for risk factor and mental health
 
+For this plot, we filtered the geographic level to "Census Track" only. 
+
 ```{r correlation_r, message=F, warning=F}
 library(corrplot)
 
@@ -286,18 +316,147 @@ ny_local_wide_census %>%
   corrplot(method = "number", type = "lower", diag = FALSE, addCoef.col = "grey", tl.col = "black", tl.srt = 10, insig = "blank", number.cex = .5)
 ```
 
+Pearson Correlation Coefficient:
+
+Unhealthy Behaviors:
+
+* **Binge Drinking** -- r = -0.43
+* **Current Smoking** -- r = 0.95
+* **Sleep < 7 hours** -- r = 0.64
+* **Obesity** -- r = 0.8
+* **Physical Inactivity** -- r = 0.81
 
 <br />
 
-## Findings
+Prevention:
+
+* **No Health Insurance** -- r = 0.77
+* **Annual Checkup** -- r = -0.04
+* **Dental Visit** -- r = -0.9
+* **Mammography** -- r = 0.12
+* **Colorectal Cancer Screening** -- r = -0.76
+* **Core Preventive Services for Older Men** -- r = -0.66
+* **Core Preventive Services for Older Women** -- r = -0.76
+* **Taking BP Medication** -- r = -0.01
+* **Pap Smear Test** -- r = 0
+* **Cholesterol Screening** -- r = -0.75
 
 <br />
 
-## Additional analysis
+## COVID-19 datasets
+
+Interactive plots can be viewed [here](analysis.html):
+
+Page 3 -- Impacts of COVID-19 on mental health
 
 <br />
 
-## Discussion
+### Making line plots for anxiety/depression symptom vs. time
+
+```{r}
+covid_symptom_df %>%
+  ggplot(aes(x = time_period, y = value, color = indicator_id)) +
+  geom_point() +
+  geom_line() +
+  scale_x_continuous(
+    limits = c(1, 18),
+    breaks = seq(1, 18, 1)
+  ) +
+  labs(
+    title = "Percentage of symptom vs. Time",
+    x = "Time (week)",
+    y = "Percentage"
+  )
+```
+
+<br />
+
+### Making boxplots for treatment received vs. time
+
+```{r}
+mental_care_df %>% 
+  ggplot(aes(x = indicator_id, y = value, color = indicator_id)) +
+  geom_boxplot() +
+  labs(
+    title = "Treatment Received Percentage",
+    x = "Treatment",
+    y = "Percentage"
+  ) +
+  theme(legend.position = "none")
+```
+
+<br />
+
+### Making line plots for treatment received vs. time
+
+```{r}
+  mental_care_df %>% 
+  ggplot(aes(x = time_period, y = value, color = indicator_id)) +
+  geom_point() +
+  geom_line() +
+  labs(
+    title = "Percentage of treatment vs. Time",
+    x = "Time (week)",
+    y = "Percentage"
+  )
+```
+
+<br />
+
+# Findings
+
+From the analysis of 500 Cities dataset, we found:
+
+Correlation Coefficient:
+
+In general, we observed that unhealthy behaviors had a positive correlation with mental health except for "Binge Drinking". Similar trend observed for prevention which had either a negative or no correlation with mental health except for "No Health Insurance". 
+
+Within all 15 risk factors, we found these risk factors had a strong, positive correlation with mental health:
+
+* Current Smoking
+* Obesity
+* Physical Inactivity
+* No Health Insurance
+
+<br />
+
+We found these risk factors had a strong, negative correlation with mental health:
+
+* Dental Visit
+* Colorectal Cancer Screening
+* Core Preventive Services for Older Women
+* Cholesterol Screening
+
+<br />
+
+We found these risk factors had no correlation with mental health:
+
+* Annual Checkup
+* Mammography
+* Taking BP Medication
+* Pap Smear Test
+
+<br />
+
+From the analysis of COVID-19 datasets, we found:
+
+* From April 23nd to November 9th, the percentage of experiencing anxiety or depression mood was higher than the percentage of experiencing anxiety only or depression only. All three lines were at the highest at week 1 (April 23rd-May 5th), at the lowest around week 7 or 8 (June 11th-June 23rd). 
+
+* From August 19th to November 9th, the percentage of medication or therapy treatment was higher than the percentage of medication only, therapy only, or no therapy. 
+
+* From August 19th to November 9th, the percentage of all treatments except for therapy only were at the highest at week 1 (August 19th-August 31st), at the lowest at week 18 (October 28th-November 9th). The percentage for therapy only were at the highest at week 17 (October 14th-October 26th), at the lowest at week 18 (October 28th-November 9th)
+
+<br />
+
+# Additional analysis
+
+**Map**: 
+
+<br />
+
+# Discussion
+
+
 
 
 

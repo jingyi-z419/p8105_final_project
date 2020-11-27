@@ -1,5 +1,5 @@
 ---
-title: "Risk Factors for Mental Health"
+title: "Correlation of Risk Factors | Impacts of COVID-19"
 output: 
   flexdashboard::flex_dashboard:
     theme: simplex
@@ -542,6 +542,7 @@ treatment_plot =
   ggplot(aes(x = indicator_id, y = value, color = indicator_id)) +
   geom_boxplot() +
   labs(
+    title = "Treatment Received Percentage",
     x = "Treatment",
     y = "Percentage"
   ) +
@@ -566,6 +567,7 @@ anxiety_depression_plot =
     breaks = seq(1, 18, 1)
   ) +
   labs(
+    title = "Percentage of symptom vs. Time",
     x = "Time (week)",
     y = "Percentage"
   ) +
@@ -583,6 +585,7 @@ mental_care_plot =
   geom_point() +
   geom_line() +
   labs(
+    title = "Percentage of treatment vs. Time",
     x = "Time (week)",
     y = "Percentage"
   ) +
