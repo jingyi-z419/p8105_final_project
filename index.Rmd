@@ -42,7 +42,7 @@ Besides the main dataset, we included two more datasets related to the impacts o
 
 **Analysis**: Interactive plots for correlation of risk factors with mental health as well as the impacts of COVID-19 on mental health.
 
-**Map**: An interactive map which you can explore different risk factors for mental health and its distributions in NY state.
+**NY Map**: An interactive map which you can explore different risk factors for mental health and its distributions in NY state.
 
 **Report**: A detailed analysis of the dataset, findings, and conclusions.
 
@@ -57,7 +57,7 @@ We also have a short screencast to walk you through the website. Please click he
 
 
 
-*If you are feeling down and need support, please click [here](https://www.cdc.gov/coronavirus/2019-ncov/daily-life-coping/managing-stress-anxiety.html) or click the smile face in the navigation bar.*
+*If you are feeling down and need support during COVID-19 pandemic, please click [here](https://www.cdc.gov/coronavirus/2019-ncov/daily-life-coping/managing-stress-anxiety.html) or click the smile face in the navigation bar.*
 
 <img src="image/social_distancing.jpg" style="width:40%">
 

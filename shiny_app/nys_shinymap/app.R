@@ -120,10 +120,8 @@ shinyApp(options = list(height = 1000),
                  leaflet() %>%
                      
                      #Adds state borders to the map
-                     addTiles(
-                         urlTemplate = "//{s}.tiles.mapbox.com/v3/jcheng.map-5ebohr46/{z}/{x}/{y}.png",
-                         attribution = 'Maps by <a href="http://www.mapbox.com/">Mapbox</a>'
-                     ) %>%
+                   addProviderTiles(providers$CartoDB.Positron) %>% 
+          
                      
                      #Add the markers for each location
                      addCircleMarkers(lat = df$lat, 

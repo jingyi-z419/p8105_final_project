@@ -80,7 +80,7 @@ Goals of our project
 
 <br />
 
-# Initial questions
+# Initial Questions
 
 <br />
 
@@ -108,7 +108,7 @@ Prevention (10):
 * **Core Preventive Services for Older Men**: Older adults aged ≥65 years who are up to date on a core set of clinical preventive services for men.
 * **Core Preventive Services for Older Women**: Older adults aged ≥65 years who are up to date on a core set of clinical preventive services for women.
 * **Taking BP Medication**: Respondents aged ≥18 years who report taking medicine for high blood pressure.
-* **Pap Smear Test**: Female respondents aged 21–65 years who do not report having had a hysterectomy and who report having had a Papanicolaou (Pap) smear within the previous 3 years
+* **Pap Smear Test**: Female respondents aged 21–65 years who do not report having had a hysterectomy and who report having had a Papanicolaou (Pap) smear within the previous 3 years.
 * **Cholesterol Screening**: Respondents aged ≥18 years who report having their cholesterol checked within the previous 5 years.
 
 Besides the main dataset, we included two more datasets related to the impacts of COVID-19 on mental health. Those two datasets can be accessed through [Indicators of Anxiety or Depression COVID-19](https://data.cdc.gov/NCHS/Indicators-of-Anxiety-or-Depression-Based-on-Repor/8pt5-q6wp) and [Mental Health Care COVID-19](https://data.cdc.gov/NCHS/Mental-Health-Care-in-the-Last-4-Weeks/yni7-er2q). 
@@ -448,9 +448,9 @@ From the analysis of COVID-19 datasets, we found:
 
 <br />
 
-# Additional analysis
+# Additional Analysis
 
-**Map**: 
+**NY Map**: 
 
 <br />
 
