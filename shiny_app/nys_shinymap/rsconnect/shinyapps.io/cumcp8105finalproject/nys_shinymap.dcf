@@ -5,8 +5,8 @@ account: cumcp8105finalproject
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 3310008
-bundleId: 3912119
+bundleId: 3921912
 url: https://cumcp8105finalproject.shinyapps.io/nys_shinymap/
-when: 1606471799.90042
+when: 1606724779.31025
 asMultiple: FALSE
 asStatic: FALSE
