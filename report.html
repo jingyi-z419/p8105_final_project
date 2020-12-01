@@ -747,6 +747,7 @@ ny_local_wide_census %&gt;%
 <p>From the analysis of 500 Cities dataset, we found:</p>
 <p>Correlation Coefficient:</p>
 <p>In general, we observed that unhealthy behaviors had a positive correlation with mental health except for “Binge Drinking”. Similar trend observed for prevention which had either a negative or no correlation with mental health except for “No Health Insurance”.</p>
+<p>We considered r &gt; |0.6| as a <strong>strong</strong> positive or negative correlation.</p>
 <p>Within all 15 risk factors, we found these risk factors had a strong, positive correlation with mental health:</p>
 <ul>
 <li>Current Smoking</li>
@@ -773,9 +774,9 @@ ny_local_wide_census %&gt;%
 <p><br /></p>
 <p>From the analysis of COVID-19 datasets, we found:</p>
 <ul>
-<li><p>From April 23nd to November 9th, the percentage of experiencing anxiety or depression mood was higher than the percentage of experiencing anxiety only or depression only. All three lines were at the highest at week 1 (April 23rd-May 5th), at the lowest around week 7 or 8 (June 11th-June 23rd).</p></li>
-<li><p>From August 19th to November 9th, the percentage of medication or therapy treatment was higher than the percentage of medication only, therapy only, or no therapy.</p></li>
-<li><p>From August 19th to November 9th, the percentage of all treatments except for therapy only were at the highest at week 1 (August 19th-August 31st), at the lowest at week 18 (October 28th-November 9th). The percentage for therapy only were at the highest at week 17 (October 14th-October 26th), at the lowest at week 18 (October 28th-November 9th)</p></li>
+<li><p>From April 23nd to November 9th, the percentage of “experiencing anxiety or depression mood” was higher than the percentage of “experiencing anxiety only or depression only”. All three lines were at the highest at week 1 (April 23rd-May 5th), at the lowest around week 7 or 8 (June 11th-June 23rd).</p></li>
+<li><p>From August 19th to November 9th, the percentage of “medication or therapy treatment” was higher than the percentage of “medication only, therapy only, or no therapy”.</p></li>
+<li><p>From August 19th to November 9th, the percentage of all treatments except for “therapy only” were at the highest at week 1 (August 19th-August 31st), at the lowest at week 18 (October 28th-November 9th). The percentage for “therapy only” were at the highest at week 17 (October 14th-October 26th), at the lowest at week 18 (October 28th-November 9th)</p></li>
 </ul>
 <p><br /></p>
 </div>
@@ -786,6 +787,12 @@ ny_local_wide_census %&gt;%
 </div>
 <div id="discussion" class="section level1">
 <h1>Discussion</h1>
+<p>Through detailed analysis including exploratory data analysis, visualization, correlation analysis, and shiny map, we have gained these insights regarding risk factors associated with mental health:</p>
+<ul>
+<li><p>Unhealthy behaviors such as “Current Smoking”, “Obesity”, and “Physical Inactivity” were found to be strong, positive correlated with mental health. “No Health Insurance”, one of the prevention, also had a strong, positive correlation with mental health. For unhealthy behaviors, it can be managed, changed or improved through intervention programs on individual level. Policy makers such as the government or public health officials may be helpful to solve the “No Health Insurance” situation.</p></li>
+<li><p>Prevention such as “Dental Visit”, “Colorectal Cancer Screening”, “Core Preventive Services for Older Women”, and “Cholesterol Screening” were found to be strong, negative correlated with mental health. Interestingly, “Binge Drinking”, one of the unhealthy behaviors, was found to be negative correlated with mental health. We should encourage people to participate in these prevention since they may help to reduce the risk of developing mental illness. However, we may need to look into more research or studies on the correlation of “Binge Drinking” and mental health. In fact, most studies agree that “Binge Drinking” induces mental illness, for instance, this paper has some discussion on <a href="https://pubs.niaaa.nih.gov/publications/arh26-2/90-98.htm">Alcoholism and Psychiatric Disorders</a>.</p></li>
+<li><p>From the analysis of two COVID-19 datasets, we found that mental illness such as depression and anxiety were extremely prevalent during the COVID-19 pandemic. It will be more interesting to have datasets that investigate some risk factors related to COVID-19 may be correlated with mental health. However, we didn’t find any open dataset to be used for this project. Some possible risk factors may be related to mental health issues during the pandemic are social distancing, physical inactivity, unemployment, and so on.</p></li>
+</ul>
 </div>
 
 

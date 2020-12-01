@@ -8,7 +8,7 @@ output:
 
 <br />
 
-<img src="image/support.jpg" style="width:60% height:auto">
+<img src="image/support.jpg" style="width:75%">
 
 <br />
 
@@ -59,7 +59,7 @@ We also have a short screencast to walk you through the website. Please click he
 
 *If you are feeling down and need support during COVID-19 pandemic, please click [here](https://www.cdc.gov/coronavirus/2019-ncov/daily-life-coping/managing-stress-anxiety.html) or click the smile face in the navigation bar.*
 
-<img src="image/social_distancing.jpg" style="width:40%">
+<img src="image/social_distancing.jpg" style="width:35%">
 
 <br />
 <br />
