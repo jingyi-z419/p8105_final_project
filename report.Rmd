@@ -41,8 +41,6 @@ Mental health disorders, including clinical depression, manic depression, schizo
 <img src="image/depress_rain.gif" style="width:60%">
 
 
-Goals of our project
-
 <br />
 
 # Related Work
