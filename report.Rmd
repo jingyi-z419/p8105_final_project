@@ -40,7 +40,22 @@ Mental health disorders, including clinical depression, manic depression, schizo
 
 <img src="image/depress_rain.gif" style="width:60%">
 
-Facts
+
+Goals of our project
+
+<br />
+
+# Related Work
+
+
+
+
+<br />
+
+# Initial Questions
+
+It is shown in the plot below that the average mentally unhealthy days for American adults steadily increased from 2013 to 2018. Initially, we aimed to examine the potential risk factors that may contribute to mental health problems, so we selected an appropriate dataset. Adjusting based on what can be extracted from the dataset, we decided to explore the prevalence of risk factors and also examine the correlations between risk factors and mental health problems. Under the background of COVID-19 in 2020, we would also like to find out if mental illness situation for New Yorkers was changed during the COVID-19 pandemic. 
+
 
 ```{r, message=F}
 chronic_df = 
@@ -71,16 +86,6 @@ unhealthy_days_mean_plot =
 unhealthy_days_mean_plot
 ```
 
-
-Goals of our project
-
-<br />
-
-# Related Work
-
-<br />
-
-# Initial Questions
 
 <br />
 
