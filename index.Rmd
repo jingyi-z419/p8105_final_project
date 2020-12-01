@@ -42,7 +42,7 @@ Besides the main dataset, we included two more datasets related to the impacts o
 
 **Analysis**: Interactive plots for correlation of risk factors with mental health as well as the impacts of COVID-19 on mental health.
 
-**NY Map**: An interactive map which you can explore different risk factors for mental health and its distributions in NY state.
+**NY Map**: An interactive map which you can explore different risk factors for mental health and its prevalence in NY state.
 
 **Report**: A detailed analysis of the dataset, findings, and conclusions.
 
