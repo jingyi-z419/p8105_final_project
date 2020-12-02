@@ -40,7 +40,23 @@ Mental health disorders, including clinical depression, manic depression, schizo
 
 <img src="image/depress_rain.gif" style="width:60%">
 
-Facts
+
+<br />
+
+# Related Work
+
+
+We were happy to see that in the past decades,  developing countries have started to make progress in facing up to the mental health related issues, instead of leaving patients alone by saying that “he/she is just sad”. As residents-to-be, we were interested in getting to know the mental health status quo in the New York state. Given the widespread of the COVID-19 pandemic, its effect on residents’ mental health was also something what we wanted to have a closer look at. As we all know that a disease outbreak is stressful, especially one in which everyone needs to closely monitor their physical health, stay home as much as possible and avoid all unnecessary social interactions with others. *[Impact of COVID-19 on Mental Health](https://www1.nyc.gov/assets/doh/downloads/pdf/covid/covid-19-mental-health-impacts-hop.pdf)
+
+
+
+
+<br />
+
+# Initial Questions
+
+It is shown in the plot below that the average mentally unhealthy days for American adults steadily increased from 2013 to 2018. Initially, we aimed to examine the potential risk factors that may contribute to mental health problems, so we selected an appropriate dataset. Adjusting based on what can be extracted from the dataset, we decided to explore the prevalence of risk factors and also examine the correlations between risk factors and mental health problems. Under the background of COVID-19 in 2020, we would also like to find out if mental illness situation for New Yorkers was changed during the COVID-19 pandemic. 
+
 
 ```{r, message=F}
 chronic_df = 
@@ -71,16 +87,6 @@ unhealthy_days_mean_plot =
 unhealthy_days_mean_plot
 ```
 
-
-Goals of our project
-
-<br />
-
-# Related Work
-
-<br />
-
-# Initial Questions
 
 <br />
 
