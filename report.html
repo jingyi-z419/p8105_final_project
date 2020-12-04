@@ -426,7 +426,7 @@ div.tocify {
 </div>
 <div id="initial-questions" class="section level1">
 <h1>Initial Questions</h1>
-<p>It is shown in the plot below that the average mentally unhealthy days for American adults steadily increased from 2013 to 2018. Initially, we aimed to examine the potential risk factors that may contribute to mental health problems, so we selected an appropriate dataset. Adjusting based on what can be extracted from the dataset, we decided to explore the prevalence of risk factors and also examine the correlations between risk factors and mental health problems. Under the background of COVID-19 in 2020, we would also like to find out if mental illness situation for New Yorkers was changed during the COVID-19 pandemic.</p>
+<p>It is shown in the plot below that the average mentally unhealthy days for American adults steadily increased from 2013 to 2018. Initially, we aimed to examine the potential risk factors that may contribute to mental health problems, so we selected an appropriate dataset. Adjusting based on what can be extracted from the dataset, we decided to explore the prevalence of risk factors and also examine the correlations between risk factors and mental health problems. Under the background of COVID-19 in 2020, we would also like to find out if mental illness situation for New Yorkers has changed during the COVID-19 pandemic.</p>
 <pre class="r"><code>chronic_df = 
   read_csv(&quot;./data/Chronic_Disease_Indicators.csv&quot;) %&gt;% 
   janitor::clean_names()
@@ -782,7 +782,7 @@ ny_local_wide_census %&gt;%
 </div>
 <div id="additional-analysis" class="section level1">
 <h1>Additional Analysis</h1>
-<p><strong>NY Map</strong>: Adopting from what we’ve learned in class, we also demonstrated the geographic distribution of measures under three different categories using the shinyApp and leaflet package, with prevalence shown. Among the eight cities (Buffalo, New York, New Rochelle, Mount Vernon, Albany, Syracuse, Rochester, Yonkers, Schenectady) in the New York state that has entries recorded in this dataset, NYC takes up 6/7 of total entries. No wonder thickly dotted pattern centered at in NYC. Under health outcome category, high cholesterol has high prevalence, while coronary heart disease and stroke have low prevalence in NYC. As for prevention, it was delighted to see that New York State residents have high awareness in certain prevention measures such as routine checkup, dentist visiting, and mammography use.</p>
+<p><strong>NY Map</strong>: Adopting from what we’ve learned in class, we also demonstrated the geographic distribution of measures under three different categories using the shinyApp and leaflet package, with prevalence shown. Among the eight cities (Buffalo, New York, New Rochelle, Mount Vernon, Albany, Syracuse, Rochester, Yonkers, Schenectady) in the New York state that has entries recorded in this dataset, NYC takes up 6/7 of total entries. No wonder thickly dotted pattern centered at NYC. Under health outcome category, high cholesterol has high prevalence, while coronary heart disease and stroke have low prevalence in NYC. As for prevention, it was delighted to see that New York State residents have high awareness in certain prevention measures such as routine checkup, dentist visiting, and mammography use.</p>
 <p><br /></p>
 </div>
 <div id="discussion" class="section level1">

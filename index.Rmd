@@ -48,7 +48,7 @@ Besides the main dataset, we included two more datasets related to the impacts o
 
 We also have a short screencast to walk you through the website. Please click [here](https://youtu.be/Wb6K_3rxqos): 
 
-<iframe width="560" height="315" src="https://youtu.be/Wb6K_3rxqos" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="400" height="250" src="https://youtu.be/Wb6K_3rxqos" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <br />
 <br />
