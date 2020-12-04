@@ -65,7 +65,7 @@ We also have a short screencast to walk you through the website. Please click he
 <br />
 <br />
 
-### Contributors: Danyang Gui, Jingyi Zhang, Zihan Yu, Kexin Sun, Yining Xiang
+### Contributors: 
 
 * Danyang Gui | [Website](https://dgsv83.github.io/dgsv83hw4.github.io/)
 * Jingyi Zhang | [Website](https://jingyi-z419.github.io/)
