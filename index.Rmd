@@ -28,9 +28,9 @@ Besides the main dataset, we included two more datasets related to the impacts o
 
 ## Main Findings
 
-* We found these risk factors had a strong, positive correlation with mental health: Current Smoking, Obesity, Physical Inactivity, and health insurance.
+* We found these risk factors had a strong, positive correlation with mental health: Current Smoking, Obesity, Physical Inactivity, and No Health Insurance.
 
-* We found these risk factors had a strong, negative correlation with mental health: Dental Visit, Colorectal Cancer Screening, Core Preventive Services for Older Women, and Cholesterol Screening
+* We found these risk factors had a strong, negative correlation with mental health: Dental Visit, Colorectal Cancer Screening, Core Preventive Services for Older Women, and Cholesterol Screening.
 
 * From April 23nd to November 9th, the percentage of experiencing anxiety or depression mood was higher than the percentage of experiencing anxiety only or depression only.
 
@@ -65,5 +65,11 @@ We also have a short screencast to walk you through the website. Please click [h
 <br />
 <br />
 
-### Contributors: Danyang Gui, Jingyi Zhang, Zihan Yu, Kexin Sun, Yining Xiang
+### Contributors: 
+
+* Danyang Gui | [Website](https://dgsv83.github.io/dgsv83hw4.github.io/)
+* Jingyi Zhang | [Website](https://jingyi-z419.github.io/)
+* Zihan Yu | [Website](https://zy2443.github.io/)
+* Kexin Sun | [Website](https://keksin.github.io/)
+* Yining Xiang |[Website](https://yiningx212.github.io/index.html)
 
